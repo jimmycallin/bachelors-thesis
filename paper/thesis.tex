@@ -1,0 +1,73 @@
+\documentclass[bachelor]{stpthesis}
+% or [master]
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+% (Babel not needed if only English is used)
+\usepackage[english]{babel}
+\usepackage{float}
+\usepackage{csquotes}
+\usepackage{mathtools}
+\usepackage{forest}
+\usepackage{siunitx}
+\usepackage{cleveref}
+\usepackage{dcolumn}
+\renewcommand{\arraystretch}{1.5}
+
+
+% Definierar kommandona \url och \path.
+\usepackage{url}
+
+% For the bibliography
+\usepackage[backend=biber,
+            firstinits=true,
+            hyperref=true,
+            url=false,
+            isbn=false,
+            doi=false,
+            backref=true,
+            style=authoryear,
+            citereset=chapter,
+            maxcitenames=3,
+            maxbibnames=100,
+            block=none]{biblatex}
+
+\usepackage{lingmacros}
+\addbibresource{thesis.bib}
+
+%\makeglossaries
+
+\begin{document}
+ \author{Jimmy Callin}
+\supervisors{Joakim Nivre, Uppsala University\\Jussi Karlgren, Gavagai AB}
+ \title{The Distribution of Mood}
+\subtitle{An Exploration of Distributional Compositions in Sentiment Classification}
+\credits{15}
+\maketitle
+\frontmatter*
+
+\begin{abstract}
+Distributional semantics is a research area investigating unsupervised data-driven models for quantifying semantic relatedness. This thesis investigates the possibilities of using distributional semantic models for sentiment classification of utterances, by composing distributional vectors of words in utterances.
+
+For evaluation I use a set of manually classified movie reviews. While the purpose of this study has been to test compositions in distributional semantic model, the work has mainly been focused on finding a useful model configuration for the DSM. The thesis concludes that more associative window sizes performed better than less associative ones. Weighting the DSM by PPMI gave the most stable performance improvements as well. Context selection is essential for achieving higher scores. While DSM does not reach beyond baseline results in its evaluation, there are still unexplored areas in which potential improvements may lie.
+\end{abstract}
+
+\clearpage
+\tableofcontents*
+
+\chapter*{Acknowledgements}
+First I would like to extend a thank you to my two supervisors, Jussi and Joakim, for providing excellent help and feedback. I did not bother you nearly as much as I should have. My friends and colleagues made a great job in providing feedback and finding typos, for which I am very grateful.
+
+Thank you to the developers of scikit-learn and the DISSECT framework. DISSECT was one of the main deliverables of the COMPOSES project, which provides a great framework for distributional vector compositioning \parencite{Dinu2013Dissect}. Scikit-learn provides the machine learning classifiers used in the experiments \parencite{Pedregosa2011ScikitLearn}. Without these libraries there would have been no way for me to finish the thesis in time.
+
+
+\mainmatter*
+	\include{introduction}
+	\include{background}
+    \include{model}
+    \include{method}
+    \include{results}
+    \include{conclusion}
+
+\printbibliography
+
+\end{document}

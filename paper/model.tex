@@ -1,0 +1,128 @@
+% -*- root: thesis.tex -*-
+\chapter{Model}
+\label{model}
+
+The model in use will be built by applying the DSM as explained in \cref{background-distributional-semantics} to a distributional semantic vector composer, resulting in a composition vector built from available distributional word vectors in the DSM. The quality of the DSM is heavily dependent upon a large number of parameters, such as the size of the context window in use. Other available parameters are the weighting of the DSM, weighting of specific contexts and words, context selection, etc. Below I will go through each of them in detail. The resulting composition vectors from the model are later used as training instances in the sentiment classifier.
+
+\section{Window size}\label{background-window-sizes}
+
+In his dissertation, \textcite[pp. 119-125]{Sahlgren2006WordSpace} argues for the importance of how differing window sizes reveal different linguistic relations. Sahlgren concludes that 2+2 window sizes expose neighbors with a \emph{paradigmatic} relationship, while using larger window sizes reveal more \emph{associative} neighbors. What this essentially means is that smaller window sizes will uncover neighbors similar to synonyms, antonyms, hyponyms, i.e., words that are \emph{interchangeable} in their prototypical contexts.  Larger window sizes, on the other hand, reveal words that are \emph{associated} to the word in focus, and do not necessarily share any specific linguistic semantic classes.
+
+Using the co-occurrence matrix example in \cref{tbl:coffeetea}, \emph{coffee} and \emph{tea} share a paradigmatic relationship since they in many contexts are of interchangeable nature. \emph{Drink} and \emph{abuse} have an associative relationship with \emph{coffee} and \emph{tea}, but the connection is stronger to \emph{coffee} rather than \emph{tea}.
+
+The model allows different sized of the context window for use in composition, where I will test the effect of varying the window size between 2+2 and 20+20.
+
+\section{DSM weighting}\label{background-dsm-weighting}
+
+An unweighted co-occurrence matrix is of limited use as a DSM. The frequency of common function words do not correspond to their semantic relevance, and negatively affect the result. Raw frequency count is also dependent on the size of the corpus, which makes it difficult to compare results between different corpora. Weighting word pairs by their mutual association decrease the importance of common function words that have little importance and normalize the distributional vectors.
+
+There are several algorithms for performing such weighting. In the evaluation, we are to test \emph{Positive Point-wise Mutual Information} (PPMI),  \emph{Exponential Point-wise Mutual Information} (EPMI), and \emph{Positive Local Mutual Information} (PLMI) \parencite{Baroni2010Distributional}, as specified in \cref{eq:background-dsm-weighting}. While EPMI and PPMI are considered traditional measures in information retrieval, PLMI is a relatively new measurement whose purpose is to improve PPMI in the area of low-frequent words, where PPMI has a tendency to exaggerate.
+
+\textcite{Bullinaria2007Extracting} review common weighting operations on DSM, demonstrating that the PPMI algorithm performs best in their evaluations.
+
+\begin{equation} \label{eq:background-dsm-weighting}
+\begin{spreadlines}{10pt}
+\begin{aligned}
+    \mathrm{pmi}(w_1,w_2) &= \log\frac{P(w_1,w_1)}{P(w_1)P(w_2)} \\
+    \mathrm{epmi}(w_1,w_2) &= \frac{P(w_1,w_2)}{P(w_1)P(w_2)} \\
+    \mathrm{ppmi}(w_1,w_2) &= \mathrm{pmi}(w_1,w_2) \text{ if } \mathrm{pmi}(w_1,w_2)\geq 0 \text{ else } 0 \\
+    \mathrm{plmi}(w_1,w_2) &= \mathrm{ppmi}(w_1,w_2) \times \mathrm{count}(w_1,w_2) \\
+\end{aligned}
+\end{spreadlines}
+\end{equation}
+
+Where $w_1$ and $w_2$ correspond to a word pair, $P$ being the probability of either a single word or the co-occurrence of two words. These weighting schemes listed above are to be evaluated in the sentiment classification task.
+
+\section{Word and context weighting}\label{background-feature-weighting}
+
+Not all words are of equal importance in classification tasks. By applying different weighting methods to the vectors, we can boost or reduce the importance of either specific context words or entire distributional vectors in utterances before composition. When weighting the distributional vector $\vec{v}$ of a word $w$, the weighting scheme $s$ acts as a scalar value to be multiplied with the distributional vector:
+
+\begin{equation}
+\mathrm{word\_weight}(w, s) = s_w \vec{v}_w
+\end{equation}
+
+When weighting the contexts of words, the weighting scheme $s$ acts as a weight vector, performing element-wise multiplication with the distributional vector $\vec{v}_w$.
+
+\begin{equation}
+\mathrm{context\_weight(w, s)} = \vec{s} \times \vec{v}_w
+\end{equation}
+
+In case of words missing from the weighting scheme, both word and context weighting default to 1.
+
+The two weighting schemes to be tested are \emph{inverse document frequency} (\emph{idf}), and the \emph{Gini}-index. \emph{Idf} is a popular weighting mechanism in information retrieval tasks for increasing the importance of words that are less common, and reduce the importance of words that occur more frequently. Defined as:
+
+\begin{equation}
+\mathrm{idf}(w, D) =  \log \frac{\mathrm{df}_w}{N_D}
+\end{equation}
+
+Where $\mathrm{df}_w$ is the document frequency of word $w$, and $N$ is the total number of documents in the set of documents $D$.
+
+While \emph{idf} is well suited for reducing the importance of commonly used words, it does not take into account the discriminatory power of such words given the classification problem at hand. \textcite{Zhu2013Using} introduce the Gini-index as a solution to this problem, and also argue that the Gini-index performs better at various classification tasks.
+
+The Gini-index in this classification problem is defined as:
+
+\begin{equation}
+\mathrm{Gini}(w) = \sum\limits_{i=1}^{N_S} P_i(w)^2
+\end{equation}
+
+Where $P_i$ is the probability of word $w$ ending up in class $i$ belonging to set $S$. This means that words which are evenly distributed among the categories in $S$ will get lower values, compared to words that mainly occur in one specific class. Higher Gini-index correlates with higher discriminatory power.
+
+While DSM weighting explained in the previous chapter uses the co-occurrence data gathered from an unlabeled corpus, the word and context weighting uses labeled training data. The main hypothesis in play here is that by using training data, any potential data variance between the unlabeled and labeled corpus is reduced. Labeled training data is also necessary for calculating the Gini-index of each word. These two weighting schemes are to be tested in the evaluation.
+
+\section{Context selection}\label{background-dsm-context-selection}
+
+Unimportant context words may have the tendency to confuse the classifier. By applying feature selection, or rather context selection in this case, it is possible to remove potentially noisy context words.
+
+The method to be used for context selection is to either sum all of the DSM weighted word co-occurrence frequencies, or calculating the length of the vector. Thereafter the top $k$ context vectors are selected, where the optimal value of $k$ is to be empirically decided in evaluation. As such, it will choose the contexts that are of most semantic relevance according to the weighting scheme $w$, which will be one of the weighting algorithms introduced in \cref{background-dsm-weighting}.
+
+\begin{equation} \label{eq:background-context-selection}
+\begin{spreadlines}{10pt}
+\begin{aligned}
+\mathrm{sum}(\vec{v}) &= \sum_{i=1}^n{w(v_i)} \\
+\mathrm{length}(\vec{v}) &= \sqrt{\sum_{i=1}^n{w(v_i)^2}}
+\end{aligned}
+\end{spreadlines}
+\end{equation}
+
+Where $\vec{v}_i$ is a specific field in the context vector $\vec{v}$ which is made up of the field of given context word in all distributional vectors. A weighting scheme is used as a way to retrieve different top $k$ words. If using no weighting scheme, the sum and length of the context vector correspond closely to the top word frequency. If using e.g. PPMI as a weighting scheme, the function words and other common words are reduced in their importance, making the top $k$ containing more semantically rich words. See \cref{tbl:featureselection-weights} for  comparison of different weighting methods using vector length.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lll}
+\hline
+Raw frequency & PPMI     & PLMI \\
+\hline
+the  & de       & the \\[-4pt]
+of   & born     & of \\[-4pt]
+in   & include  & was \\[-4pt]
+and  & known    & age \\[-4pt]
+to   & son      & median \\[-4pt]
+a    & la       & income \\[-4pt]
+was  & n        & he \\[-4pt]
+is   & called   & in \\[-4pt]
+for  & name     & as \\[-4pt]
+as   & near     & were \\[-4pt]
+on   & like     & his \\[-4pt]
+by   & named    & females \\[-4pt]
+with & former   & is \\[-4pt]
+that & located  & males \\[-4pt]
+he   & e        & km \\[-4pt]
+from & r        & to \\[-4pt]
+at   & john     & for \\[-4pt]
+it   & daughter & united \\[-4pt]
+his  & famous   & states \\[-4pt]
+were & m        & be \\[-4pt]
+\hline
+    \end{tabular}
+    \caption{The top 20 context words of applying different weighting scheme to the context selection. Calculation is based on the context vector length. }
+    \label{tbl:featureselection-weights}
+\end{table}
+\section{Distributional vector composition}
+
+While the work in this thesis does not try to develop a probable model of the meaning of an utterance, it still draws inspiration from distributional compositional semantics. The purpose of the composed distributional vectors in this work is rather about finding an empirically tested representation well suited for machine learning classifiers.
+
+The composition operation used in the model is the weighted additive function:
+
+\begin{equation}\vec{w}_{\text{comp}} = \alpha \vec{w}_1 + \beta \vec{w}_2\end{equation}
+
+Where $\vec{w}_{\text{comp}}$ would be the composed vector of the words $\vec{w}_1$ and $\vec{w}_2$, computed by weighted element-wise addition. Setting $\alpha$ and $\beta$ to 0.5 essentially creates an averaged centroid model, which has shown to perform well in various information retrieval tasks \parencite{Mitchell2010Composition}, and is essentially the standard approach for compositionality within the field \parencite{Guevara2011Computing}.

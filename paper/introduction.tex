@@ -1,0 +1,21 @@
+ % -*- root: thesis.tex -*-
+\chapter{Introduction}
+\label{introduction}
+
+Most of the sentences you will read in this thesis have never been uttered before. The productivity of language makes this not only possible, but highly probable. Despite this, there will hopefully be little trouble understanding the meaning, motive and conclusion of this thesis. These meanings are built up by words you have had a lifetime to learn and ponder. A few of these you might have had to look up, but for the majority all you needed was the \emph{context} in which they were used.
+
+Unlike humans, however, computers have difficulties making the same kind of inference from text. Today, words do not carry the same level of meaning to a machine as it does to humans. To a machine, these words are just another string of data to be processed or ignored. Either we can program new commands to the machine directly, or we can give it manually compiled training data for it to generalize based on recognizable patterns. But once a word appears outside of the domain of available commands, never seen in the training session, things start to get tricky. Suddenly the computer is confronted with a new piece of data; a new symbol. Processing this new symbol would be trivial for you, but for the machine the best strategy would typically be to ignore it, hoping it is redundant in the bigger picture. No matter how many times the machine would see this new unfamiliar symbol, without the interference of human hands it would not know what to do.
+
+Text has structure; a \emph{distribution} of building blocks. The purpose of distributional semantics is to enable the computer to go beyond the relatively fragile domain of previously taught commands, and to begin learning new words based on their surrounding neighbors. No longer would the productivity of language be a problem, but rather a source from which to learn new knowledge.
+
+While still a field in its infancy, promising results are already emerging for various applications. So far, the field has mainly been focused on using the semantic representation of separate words and not combining these distributions into single representations of utterances. If this was possible, not only could we generalize for words we have never seen before, but entire utterances. This would lead to great potential in several different applications. The \emph{mood} of text is but one of them, and the one we are to investigate further below.
+
+\section{Purpose}
+The purpose of this thesis is to investigate the usefulness of compositions of distributional vectors for classifying the mood of utterances. I will assume that a bag of words model will be sufficient for representing the necessary linguistic information for sentiment classification. I will further assume that the composition vectors are linearly separable in the feature space, and that all utterances can be classified as either positive or negative. Finally, I will assume that word meaning can be learned from linguistic environment.
+
+The main contribution of this thesis will be to explore how different parameter settings affect the quality of the compositional distributional bag-of-words model in sentiment classification. The final model is to be evaluated against a \emph{tfidf} classifier, which is explained in detail in \cref{method-baseline}.
+
+\section{Outline}
+\label{outline}
+
+\Cref{background} will be dealing with the necessary background for the experiments, broadly going through the whats and the whys of sentiment classification and distributional semantics, and the benefits of combining these two fields. \Cref{model} introduces the parameters included in the model which is to be tuned. After going through the experimental setup in \cref{method}, including the topics of dataset, choice of classifier and baseline, \cref{results} presents and discusses the results. They will be split into subparts based on the tested parameters. Finally, \cref{conclusion} will conclude the thesis.

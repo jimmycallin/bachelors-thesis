@@ -1,0 +1,1104 @@
+\documentclass[bachelor]{stpthesis}
+\usepackage[utf8]{inputenc}
+\usepackage[british,swedish]{babel}
+
+% För bibliografin
+\usepackage[round]{natbib}
+\bibliographystyle{sweplnat}
+
+\usepackage[babel,swedish=guillemets*]{csquotes}
+\let\q\enquote
+
+% Definierar kommandona \url och \path.
+\usepackage{url}
+
+% För IPA-exemplet
+\usepackage{tipa}
+
+% För longtable-exemplet
+\usepackage{longtable}
+
+% Logiska kommandon för att skriva om LaTeX-klasser och LaTeX-paket.
+%
+% I denna text nämner jag LaTeX-klasser flera gånger. Sådana
+% vill jag skriva i annan stil (med \textsf). Istället för att skriva
+% så väljer jag att definiera ett kommando \class{...} som gör samma
+% sak. Om jag ångrar mig angående hur en klass ska skrivas ut behöver
+% jag bara ändra på ett ställe. Samma med \pack{...} för paket.
+% Enkla nya kommandon ser ut precis så här. Siffran inom hakparenteser
+% anger hur många argument det nya kommandot tar och dessa läggs sedan
+% in med #1, #2, osv.
+
+\newcommand{\class}[1]{\textsf{#1}}
+\newcommand{\pack}[1]{\textsf{#1}}
+
+% Jag skapar en egen omgivning för citerad kod (Quoted CODE)
+% och låter den vara ekvivalent med boxedverbatim.
+
+\newenvironment{qcode}{\boxedverbatim}{\endboxedverbatim}
+\bvtopofpage{\begin{center}\normalfont (forts.)\end{center}}
+
+% Eftersom jag behöver så mycket kort verbatim-text gör jag så
+% det räcker att omge text med ||.
+\MakeShortVerb{\|}
+
+% Använd smalt mellanslag i förkortningen "t.ex.".
+\newcommand{\tex}{t.\,ex.}
+
+% En del ord som inte blev bra avstavade
+\hyphenation{kan-ske titel-sida titel-sidan harvard-modell-en stp-thesis
+  pdf-latex stan-dard-inställ-ning-en efter-som eko-arean sats-ytan
+  stycke
+  biblio-grafi-stil biblio-grafi-stilen biblio-grafi-stilar
+  biblio-grafi-stil-ar-na
+}
+
+% Helst ska man inte avstava namn på svenska alls, men att
+% avstava sammansatta efternamn är rätt OK ändå.
+\hyphenation{ström-quist alm-qvist dahl-löf}
+
+\begin{document}
+\author{Per Starbäck}
+\supervisors{Ettan Handledare, Uppsala Universitet\\
+  	     Tvåan Handledare, NLP Enterprises AB}
+\title{Att skriva uppsatser med stpthesis}
+\subtitle{En användarhandledning}
+% \credits{30}
+
+\maketitle
+\frontmatter*
+
+\begin{abstract}
+Sammandrag skrivs med omgivningen |abstract|.
+\end{abstract}
+
+\begin{otherlanguage}{british}
+\begin{abstract}
+It can be useful to have several abstracts in different languages,
+like this.
+\end{abstract}
+\end{otherlanguage}
+
+\clearpage
+\tableofcontents*
+
+\chapter{Förord}
+
+Tack till alla som agerat försökskaniner till tidigare versioner av
+detta, samt alla andra som kommit med kommentarer!
+
+(Detta är ett kapitel i uppsatsens \emph{frontmatter},
+och därför får det inget nummer.)
+
+\mainmatter*
+\chapter{Inledning}
+
+Denna text beskriver \class{stpthesis} -- en LaTeX-klass
+att skriva STP-examensarbeten med. Dessutom nämns en del
+saker som inte är speciella för \class{stpthesis} men som kan vara
+särskilt användbara för STP:are som skriver examensarbete i LaTeX.
+
+Denna text är själv skriven med den klassen, trots att den inte är ett
+STP-examensarbete, för att visa hur det kan se ut.
+
+\Citet{dahllof:exarbete} ger en lista med rekommenderad litteratur
+för examensarbeten
+\citep{dahllof:akupp, saxena:mallar, stromquist:upp},
+och den har också använts vid framställandet av \class{stpthesis}.
+
+Dessutom har allmän litteratur om typografi använts
+\citep{hellmark:th, bringhurst:elements, lansburgh}.
+
+För det som inte är specifikt för just \class{stpthesis} hänvisas i
+första hand till kapitlet om LaTeX i kurskompendiet till
+Introduktion till datateknik för språkvetare \citep{idslatex}.
+
+Länk till detta och till en del andra LaTeX-resurser finns på
+\url{http://stp.lingfil.uu.se/datorer/tex/}.
+
+Klassen \class{stpthesis} bygger inte på någon av standardklasserna i
+LaTeX, utan på klassen \class{memoir}, som har många fördelar jämfört
+jämfört med standardklasserna.
+
+\chapter{Uppsatsens delar}
+\section{Ange klass}
+
+En LaTeX-fil börjar med en deklaration av vilken
+\emph{dokumentklass} som just detta dokument använder.
+Med denna klass blir den raden
+\begin{qcode}
+\documentclass[bachelor]{stpthesis}
+\end{qcode}
+
+\noindent eller med |master| i stället för |bachelor|, beroende på vad
+det är för slags uppsats.
+
+Man kan lägga till fler \emph{väljare} (\emph{options})
+genom att lista dem alla inom hakparenteserna, \tex\ som
+
+\begin{qcode}
+\documentclass[master,times,12pt]{stpthesis}
+\end{qcode}
+
+I detta exempel används väljarna |master|, |times| och |12pt|. Senare
+nämns några
+sådana väljare som du kan vilja använda under särskilda omständigheter,
+men normalt behöver du bara ange |bachelor| eller |master|.
+
+\section{Dokumenthuvudet}
+
+Själva textens början visas med |\begin{document}|.
+Avsnittet före det kallas för dokumenthuvudet (\emph{preamble}).
+Början av den ser ut så här i ett arbete som är skrivet på svenska:
+
+\begin{qcode}
+\usepackage[utf8]{inputenc}
+\usepackage[swedish]{babel}
+\end{qcode}
+
+Normalt är det en bra idé att även ta med
+|\usepackage[T1]{fontenc}|
+i sina LaTeX-filer, men det lägger \class{stpthesis} till
+av sig självt, så det behövs inte här.
+(Det är för att välja fonter där \tex\ \emph{åäö} är \emph{egna tecken}
+och inte behöver konstrueras med accenter.)
+
+\begin{itemize}
+\item inputenc: Detta talar om vilken teckenkodning din infil
+	använder sig av. Utan detta fungerar inte tecken som åäö.
+        Det skadar inte att ange det även om du (i en fil på engelska)
+        inte använder några \q{konstiga} tecken.
+        Om din fil är i Latin1 istället för UTF8 så skriv |latin1|
+        istället.
+\item babel: Om du skriver uppsatsen på engelska behöver du inte ange
+        detta, men du kan ange |british| eller |american| uttryckligen
+        för att få motsvarande konventioner för avstavningar och
+        datumformat. (Läs mer om att ha olika språk i uppsatsen i
+        kapitel~\ref{chap:lang}.)
+\end{itemize}
+
+Det finns en mängd andra paket som kan kan vilja
+använda i sitt dokument och som man i så fall tar in här
+med |\usepackage|. En del tips på sådana följer senare.
+
+\section{Början av dokumentet}
+
+\begin{qcode}
+\begin{document}
+\author{Ellen Kaka}
+\supervisors{Anna Handledare, Uppsala universitet\\
+	     Bertil Handledare, NLP Enterprises AB}
+\title{Palindrom i svenskan}
+\date{1 april 2012}
+\maketitle
+\end{qcode}
+
+Kommandot |\maketitle| genererar en titel utifrån information från de
+övriga kommandona, som därför måste komma först.
+
+Om du bara har \emph{en} handledare, så använd |\supervisor| istället.
+
+Om du utelämnar |\date| kommer dagens datum att användas istället,
+vilket väl är lämpligt innan du är klar med uppsatsen.
+% , så ser du därmed när en viss version är gjord.
+
+Med kommandot |\subtitle| kan du dessutom lägga till en undertitel.
+% och med |\credits| kan du tala om hur många hp uppsatsen är på.
+
+% (Det finns ett kommando |\authoremail| också för att ange ens
+% datoradress, eftersom den nämndes på titelsidan tidigare, men
+% numer har det ingen effekt.)
+
+Om din titel är för lång för att rymmas på en rad, och du inte är nöjd
+med de radbrytningar som blir, så lägg gärna själv in radbrytningar
+med |\\| i den. Radbrytning av titlar och rubriker bör allra helst
+göras för hand, med hänsyn tagen till fraserna i texten.
+
+Efter titeln kommer
+
+\begin{qcode}
+\frontmatter*
+\begin{abstract}
+  Här ska uppsatsens sammandrag vara. Den skrivs dock
+  lämpligen när resten av uppsatsen är färdigskriven.
+\end{abstract}
+	
+\clearpage
+\tableofcontents*
+
+\clearpage
+\listoffigures
+
+\clearpage
+\listoftables
+\end{qcode}
+
+Här kommer |\maketitle| att konstruera en titelsida med de data du
+angav tidigare.
+
+Innehållsförteckningen är obligatorisk. Om du ska ha särskilda
+förteckningar över figurer och tabeller använder du även de sista
+raderna i exemplet. Asterisken i slutet av |\tableofcontents*| gör att
+innehållsförteckningen själv inte hamnar i innehållsförteckningen.
+(Det finns även motsvarande asteriskformer
+|\listoffigures*| och |\listoftables*|.)
+
+
+\section{Onumrerade och numrerade kapitel}
+
+Efter detta kommer kapitlen i din uppsats:
+\begin{qcode}
+\chapter{Förord}
+...
+	
+\mainmatter*
+\chapter{Introduktion}
+...
+\end{qcode}
+
+Lägg in |\mainmatter*| före första kapitlet i huvudinnehållet. Det som
+följer därefter blir kapitel~1, och tidigare kapitel blir onumrerade,
+vilket är normalt för ett förord.
+
+Om man istället använder |\frontmatter| och |\mainmatter| utan
+stjärnor så kommer dessutom sidnumreringen att börja med~1 först där
+kapitel~1 börjar och tidigare sidor får romerska sidnummer.
+Det är mer traditionellt, men kan vara opraktiskt när man
+läser uppsatsen på dator, eftersom det då finns två sätt att numrera
+sidorna och man kan lätt göra fel när man ger ett kommando för att
+bara skriva ut vissa sidor från filen.
+
+\section{Slutet av uppsatsen}
+
+Eventuella bilagor i uppsatsen anges som vanliga kapitel
+med |\chapter|,
+men skriv |\appendix| före det första, som därmed blir bilaga~A.
+
+Med |\backmatter| talar du om att det är slut på numrerade kapitel.
+Om du har ytterligare kapitel efter det kommer de att bli onumrerade
+bilagor.
+
+I slutet av uppsatsen har du också referensförteckningen.
+Den tas upp i kapitel~\ref{chap:refs} på s.~\pageref{chap:refs}.
+
+Alltihop avslutas med
+\begin{qcode}
+\end{document}
+\end{qcode}
+
+\chapter{Uppställningar och tabeller}
+ 
+Klassen \class{stpthesis} har en del utökningar och ändringar jämfört
+med hur uppställningar fungerar i standardklasserna.
+
+En |tabular| som denna:
+
+\begin{quote}
+  \begin{tabular}{lll} \toprule
+    \textsf{svenska} & \textsf{engelska} & \textsf{esperanto} \\
+    \midrule
+    ett & one & unu     \\
+    två & two & du      \\
+    tre & three & tri   \\
+    \bottomrule
+  \end{tabular}
+\end{quote}
+kan man göra så här:
+
+\begin{qcode}
+\begin{tabular}{lll} \toprule
+  \textsf{svenska} & \textsf{engelska} & \textsf{esperanto} \\
+  \midrule
+  ett & one & unu       \\
+  två & two & du        \\
+  tre & three & tri     \\
+  \bottomrule
+\end{tabular}
+\end{qcode}
+
+Det som är speciellt i detta exempel är kommandona
+|\toprule|, |\midrule| och |\bottomrule| som
+ger lite bättre utseende än den linje |\hline| som annars är den
+normala i LaTeX.
+Typografisk litteratur brukar förespråka en sådan enkel layout utan
+lodräta streck och oftast med bara tre vågräta streck -- en |\toprule|
+överst, en |\bottomrule| underst och en |\midrule| mellan rubrik och
+resten.
+
+% \begin{table}
+%   \caption{En linjerad tabell av ett slag som inte rekommenderas.}
+%   \centering
+%   \begin{tabular}{|l|l|l|} \hline
+%     \textsf{svenska} & \textsf{engelska} & \textsf{esperanto} \\ \hline
+%     ett & one & unu	\\ \hline
+%     två & two & du	\\ \hline
+%     tre & three	& tri	\\ \hline
+%   \end{tabular}
+%   \label{tab:linjerad}
+% \end{table}
+
+I många LaTeX-sammanhang ser man istället uppställningar med mycket
+mer linjer, inklusive lodrätta linjer.
+% , som tabell~\ref{tab:linjerad}.
+Typografer brukar avråda från detta.
+
+Denna uppställning (|tabular|) är inte en \emph{tabell} (|table|). Med
+tabell menas här något som har en beteckning som \q{tabell~4.2} och
+som har en lite friare placering och normalt hamnar högst upp eller
+längst ner på en sida i närheten.
+
+AucTeX förstår att man vill ha en |tabular| inne i en
+|table|, så när man ger ett kommando för att lägga in en |table| så
+får man en mall för en |tabular| på köpet.
+
+När man lägger in en |table| med |C-c C-e| får man först en fråga
+\emph{(Optional) Float Position:} som man kan svara med bara retur på.
+(Så kan man göra med allt som står som \emph{Optional}.)\footnote{%
+  Det står mer om detta val i avsnitt~\ref{sec:placering} om placering
+  av figurer och tabeller.}
+Sen kommer frågor om \emph{Caption} och om man vill centrera
+tabellen (här är vanligtvis~\emph{y} ett bra svar). På frågan om
+\emph{label} ger man denna tabell en kort etikett som man sedan
+använder för att hänvisa till den med |\ref|. För tabeller brukar den
+börja med~|tab:| vilket AucTeX lägger till av sig självt.
+
+När man kommer till själva uppställningen får man bland annat en fråga
+om \emph{Format} vilket gäller vilka kolumner som används, \tex\
+\q{lll} för uppställningen ovan. (Tre vänsterställda kolumner.)
+Bokstäverna i formatet är oftast |l| för vänstställd, |c| för
+centrerad och |h| för högerställd kolumn.
+
+% Observera att man brukar sätta en rubrik (|\caption|) \emph{över}
+% tabellens innehåll till skillnad från figurer där bildtexten hamnar
+% \emph{under} själva figuren. Etiketter för tabeller börjar
+% konventionellt med |tab:|.
+
+% För mer komplicerade tabeller, \tex\ där vissa celler är ihopslagna i
+% vissa rader eller kolumner, får du läsa i andra texter.
+Eftersom omgivningen |tabular| i \class{memoir} är utökad jämfört med den
+som är standard i LaTeX, så nöj dig inte med allmänna
+LaTeX-introduktioner utan se även \class{memoir}-dokumentationen
+om du har behov utöver vad som står här.
+
+\section{Breda tabeller}\label{sec:bred}
+
+Flera har velat ha tabeller som blir för breda för papperet, eller i
+alla fall för satsytan.
+En sak man kan göra då är att välja en mindre text i tabellen, \tex\
+med |\small|.
+En annan möjlighet är att låta tabellen sticka ut i marginalerna
+med hjälp av |usemargins|.
+Omgivningen |usemargins| är speciell för \class{stpthesis} och använder sig
+av |adjustwidth| i \class{memoir}, med vilket du kan styra beteendet
+mer om det skulle behövas.
+
+Den breda tabellen~\ref{tab:bred} här nedan är skriven med en
+omgivning |usemargins| omkring hela |tabular|en.
+
+
+\begin{table}[hb]\small
+  \caption{En bred tabell.}
+  \label{tab:bred}
+  \begin{usemargins}
+    \begin{tabular}{cccccccccccccccc}
+      \toprule
+       1 & 2 & 3 & 4 & 5 & 6 & 7 & 8
+         & 9 & 10 & 11 & 12 & 13 & 14 & 15 & 16  \\
+       \midrule
+       ett & två & tre & fyra & fem & sex
+           & sju & åtta & nio & tio & elva & tolv
+           & tretton & fjorton & femton & sexton \\ 
+       unu & du & tri & kvar & kvin & ses
+           & sep & ok & na\u{u} & dek & dek unu & dek du
+           & dek tri & dek kvar & dek kvin & dek ses \\
+      \bottomrule
+    \end{tabular}
+  \end{usemargins}
+\end{table}
+
+% En tredje möjlighet för verkligt breda tabeller är att lägga in
+% tabellen åt sidan istället.
+
+\section{Långa tabeller}
+
+Det kan också hända att man har en tabell som är för lång för att
+rymmas på en sida. Då får man lov att lägga den ungefär som en
+|tabular| direkt på stället, men istället med |ctabular|
+(\emph{continous tabular}) som kan fortsätta över till nästa sida. Här
+kommer en sådan. (I just detta fall hade det gå att få rum med hela på
+samma sida, så det är inte så stor poäng med det.)
+
+% En \caption kan bara användas till de rörliga tabellerna och
+% figurerna. Här definieras och används ett kommando för fristående
+% tabellrubriker som beter sig som tabellrubriker (dvs. hamnar
+% i table-numreringen).
+\newfixedcaption{\freetabcaption}{table}
+\freetabcaption{Sambandet mellan semantisk roll och
+  satsledsfunktion vid några vanliga verb.
+  (Taget från \emph{Svenska Akademiens grammatik}, 4, s.~65.)
+  Här har tabellen dubblerats för att bli längre.}
+\begin{ctabular}{lllll}\toprule
+\textbf{Verb} & \textbf{Agens} & \textbf{Upplevare}
+	& \textbf{Föremål} & \textbf{Plats} \\
+\midrule
+\emph{undervisa} & subjekt & objekt  &        & adverbial \\
+\emph{tömma}     & subjekt & --      & --     & objekt \\
+\emph{hämta}     & subjekt & --      & objekt & adverbial \\
+\emph{sätta}     & subjekt & --      & objekt & adverbial \\
+\emph{älska}     & --      & subjekt & objekt & \\
+\emph{upptäcka}  & --      & subjekt & objekt & \\
+\emph{hamna}     & --      & --      & subjekt& adverbial \\
+\emph{passera}   & --      & --      & subjekt (inanimat) & objekt \\
+% Och en gång till bara för att göra det längre
+\emph{undervisa} & subjekt & objekt  &        & adverbial \\
+\emph{tömma}     & subjekt & --      & --     & objekt \\
+\emph{hämta}     & subjekt & --      & objekt & adverbial \\
+\emph{sätta}     & subjekt & --      & objekt & adverbial \\
+\emph{älska}     & --      & subjekt & objekt & \\
+\emph{upptäcka}  & --      & subjekt & objekt & \\
+\emph{hamna}     & --      & --      & subjekt& adverbial \\
+\emph{passera}   & --      & --      & subjekt (inanimat) & objekt \\
+\bottomrule
+\end{ctabular}
+
+I detta exempel har denna |ctabular| fått en rubrik precis som om det
+vore en |table|. Om man vill ha det så måste man trixa lite, så koden
+för detta börjar som i figur~\ref{fig:ctabular}.
+
+\begin{figure}[b]
+  \centering
+\begin{qcode}
+\newfixedcaption{\freetabcaption}{table}
+\freetabcaption{Sambandet mellan semantisk roll och
+  satsledsfunktion vid några vanliga verb.
+  (Taget från \emph{Svenska Akademiens grammatik}, 4, s.~65.)
+  Här har tabellen dubblerats för att bli längre.}
+\begin{ctabular}{lllll}\toprule
+\textbf{Verb} & \textbf{Agens} & \textbf{Upplevare}
+	& \textbf{Föremål} & \textbf{Plats} \\
+\midrule
+\emph{undervisa} & subjekt & objekt  &        & adverbial \\
+...  
+\end{qcode}
+  \caption{Början av koden för \texttt{ctabular}-exemplet.}
+  \label{fig:ctabular}
+\end{figure}
+
+Vill man ha mer finesser finns det andra möjligheter men då måste
+man ladda extra paket. Två möjligheter är \pack{longtable} och
+\pack{xtab} som den intresserade kan titta närmare på.
+
+\chapter{Figurer och bilder}\label{chap:fig}
+
+Figurer fungerar som tabeller vad gäller placering,
+men har en egen omgivning |figure| för
+att få egna beteckningar och egen numrering.
+För breda figurer kan använda sig |usemargins| liksom för tabeller
+(avsnitt~\ref{sec:bred}), och om du har problem med var figurerna
+hamnar, så se avsnitt~\ref{sec:placering}.
+
+Själva innehållet i figuren kan man göra på flera sätt, men ofta är
+det en bild som man hämtat från en annan källa.
+För att kunna inkludera bilder med |\includegraphics|
+måste man normalt först ha laddat ett grafikpaket. Klassen
+\class{stpthesis} har dock redan laddat paketet \pack{graphicx},
+så detta behöver du inte göra.
+
+Bilder som ska inkluderas bör vara PDF eller PNG.
+För traditionell LaTeX (som skapar en |.dvi|-fil) är det
+istället bäst att använda EPS (Encapsulated Postscript) för bilderna.
+Programmet |convert| omvandlar mellan olika bildformat, \tex\
+\begin{qcode}
+convert foo.eps foo.png
+\end{qcode}
+
+(För att konvertera från EPS till PDF finns även
+programmet \texttt{epstopdf}.)
+
+I sin enklaste form inkluderar man en bild med något i stil med
+\begin{qcode}
+\includegraphics{gnu}
+\end{qcode}
+för en fil som \tex\ kan heta |gnu.png|.
+(Det är bäst är på detta sätt inte ange filextensionen i argumentet
+till |\includegraphics|. Då kommer den själv att välja den fil som
+passar bäst ifall det finns flera.)
+
+Det är vanligt är att man behöver skala figuren. Då kan man \tex\
+skriva |\includegraphics[width=10cm]{gnu}| för att tala om att figurens
+bredd ska vara 10\,cm.
+Ibland kan det för en stor figur vara praktiskt att ange
+|width=\linewidth| som ger samma bredd som texten har, eller
+\tex\ |width=0.9\linewidth| för att få 90\,\% av detta.
+
+För fler möjligheter om hur man inkluderar bilder, se
+kapitel~11 i dokumentationen till \class{memoir}, samt
+\q{Using Imported Graphics in LaTeX and pdfLaTeX}.
+
+Den senare finns på nätet på
+\url{http://www.ctan.org/tex-archive/info/epslatex.pdf}
+samt utskriven i tidskriftsamlaren \q{\TeX} i stora datorsalen.
+% [gammal version:]
+% som finns i \path{/usr/share/texmf/doc/latex/graphics/epslatex.ps}
+% på GNU/Linux-datorerna.
+% Men versionen på nätet är nyare, så hänvisa till den istället.
+
+\chapter{Lingvistik}
+
+I språkvetenskap är det vanligt att man har numrerade språkexempel.
+Om du har sådana i din uppsats kan du skriva dem med
+
+\begin{qcode}
+\begin{examples}
+  \item Detta är en mening.
+  \item Här är en annan mening. \label{ex:foo}
+\end{examples}
+
+Se särskilt exempel~\ref{ex:foo} ovan!
+\end{qcode}
+
+vilket resulterar i följande:
+
+\begin{quote}
+  \begin{examples}
+  \item Detta är en mening.
+  \item Här är en annan mening. \label{ex:foo}
+  \end{examples}
+
+  Se särskilt exempel~\ref{ex:foo} ovan!
+\end{quote}
+
+Ett ensamt exempel kan man alternativt skriva som
+
+\begin{qcode}
+\begin{example}
+  Här är ett ensamt exempel.
+\end{example}
+\end{qcode}
+
+På detta sätt får man en numrering som fortsätter uppåt i hela texten
+och möjlighet att referera till exempel utan att man behöver bekymra
+sig om att numreringen behöver göras om när man lägger till eller tar
+bort exempel.
+
+\label{page:ipa}
+För fonetisk skrift med IPA
+(% The International Phonetic Association
+\textipa{[Di Int@"næS@n@l f@"nEtIk @soUsi"eISn]})
+kan man använda paketet \pack{tipa}.
+
+Dokumentation finns lokalt i
+% Även /usr/share/doc/tetex-font-tipa-1.3/tipaman.dvi,
+% men jag refererar hellre till en pdf.
+\path{/local/texmf/doc/tipa/tipaman.pdf}.
+
+Lingvistiska träd ritas enklast med paketet \pack{qtree}.
+Använd
+
+\begin{qcode}
+\usepackage{etex}
+\usepackage{qtree}
+\end{qcode}
+i dokumentets huvud för att ladda det\footnote{%
+  Observera att \pack{etex} måste laddas först när man
+  använder \pack{qtree} tillsammans med \class{memoir}.}
+och titta i
+\path{/local/texmf/tex/latex/qtree/qtreenotes.pdf} för att få en hel
+del exempel på hur man sedan ritar träd med det.
+
+\chapter{Hänvisningar och referenser}
+\label{chap:refs}
+
+\section{Rekommendationer}
+
+Det finns däremot en stor mängd olika paket och varianter av dessa i
+LaTeX för att hantera referenslistan och hänvisningar.
+Detta är mina rekommendationer:
+
+\begin{itemize}
+\item Använd |\usepackage[round]{natbib}| i dokumenthuvudet.
+  Med väljaren |round| får man () istället för~[].
+  % Den väljaren behövs inte för svenska, för då är det default.
+\item Använd därefter |\bibliographystyle{plainnat}| för att ange stilen på
+  referenslistan i en engelskspråkig text. Om du skriver på svenska
+  så använd stilen |sweplnat| istället.
+\item Lägg in referenslistan i
+  % slutet av
+  dokumentet med |\bibliography{|\emph{filnamn}|}|
+  där filen \emph{filnamn}|.bib| innehåller en BibTeX-databas.
+\end{itemize}
+
+I framtiden lär jag rekommendera paketet \pack{biblatex} istället.
+Om du har särskilda krav kan det vara värt att titta på det redan nu.
+
+\section{Hänvisningar}
+
+Till \TeX\ finns ett program BibTeX som hanterar bibliografier och
+referensförteckningar i ett särskilt format. Sådana filer har namn
+som slutar på |.bib| och redigeras i en särskild BibTeX-mode i Emacs.
+Där ger man varje uppslag (bok, artikel, \dots) en särskild nyckel
+som man sen använder när man skriver hänvisningar i texten.
+
+Se \tex\ den |exempel.bib| som denna text använder.
+Där står
+
+\begin{qcode}
+@Book{stromquist:upp,
+  author =	 {Siv Strömquist},
+  title = 	 {Uppsatshandboken},
+  publisher = 	 {Hallgren \& Fallgren},
+  year = 	 2003,
+  address =	 {Uppsala},
+  edition =      3
+}
+\end{qcode}
+vilket gör att jag kan referera till \citet{stromquist:upp}
+genom att skriva
+\begin{qcode}
+... kan referera till \citet{stromquist:upp} genom att ...
+\end{qcode}
+
+I paketet \pack{natbib} använder man två olika kommandon för
+att lägga in referenser: |\citet| och |\citep|.
+
+Detta följer författar-år-modellen för referenser
+(Harvardmodellen). Den används oftast inom
+lingvistik och rekommenderas också av
+\citet[s.~43]{svenskaskrivregler}.
+Där består hänvisningarna av författarnamn och år
+inne i texten, ibland innanför och ibland utanför parentes,
+så det är därför det behövs två olika kommandon.
+
+När man nämner en författare i texten använder man |\citet| för detta,
+så
+\begin{qcode}
+Det senare rekommenderas av \citet{hellmark:th}.
+\end{qcode}
+ger
+\begin{quote}
+  Det senare rekommenderas av \citet{hellmark:th}.
+\end{quote}
+Bara årtalet läggs till inom parentes. 
+
+När hela referensen är ett parentetiskt tillskott används
+istället |\citep|.
+\begin{qcode}
+kapitlet om LaTeX i kurskompendiet till IDS \citep{idslatex}.
+\end{qcode}
+ger
+\begin{quote}
+kapitlet om LaTeX i kurskompendiet till IDS \citep{idslatex}.
+\end{quote}
+
+Ifall samma författare har skrivit flera verk från samma år läggs det
+automatiskt till särskiljande bokstäver.
+
+Eftersom nästan alla använder författar-år-modellen i sina uppsatser
+är det den enda som beskrivs här. Det finns dock gott stöd för andra
+typer av referenser också.
+Eftersom författar-år-modellen är ovanligt lätt att hantera för hand
+så funkar det i och för sig rätt bra att skriva ut referenserna för
+hand istället, men då får man inte länkar i PDF:en och kan inte få
+litteraturförteckningen genererad automatiskt.
+
+
+\subsection{Hänvisningar till delar av texter}
+
+Ibland vill man referera till en viss del av en text,
+\tex\ genom att ange sidnummer.
+Det ska man i synnerhet göra när man \emph{citerar} en text
+\citep[s.~42]{stromquist:upp}.
+Man kan lägga till en sådan anvisning med ett optionellt
+argument inom hakparentes till cite-kommandona. Den hänvisning som
+finns i detta stycke skrevs
+|\citep[s.~42]{stromquist:upp}|.
+(Observera tildetecknet för fast mellanslag före sidnumret.)
+
+Härovan används ett komma för att skilja av denna del,
+vilket är standardinställningen i \pack{natbib}. Vill
+man ha det annorlunda kan man välja den interpunktion
+som hänvisningarna använder med kommandot |\bibpunct|.
+
+Här är ett exempel som visar default-värdena.
+
+\begin{qcode}
+\bibpunct[, ]{(}{)}{;}{a}{,}{,}
+\end{qcode}
+
+Det optionella argumentet (inom hakparenteser) anger skiljetecken
+före sidhänvisning. Andra tänkbara värden kan vara |:| eller |:~|.
+
+% För detaljer om de sex argument som kommer därefter, se
+% dokumentationen till \class{natbib}. % **referens
+% Det av dessa argument där du mest troligt vill ha något annat än
+Ett ytterligare argument som du kanske vill ändra på är det
+näst sista som anger interpunktion mellan författarnamn och år.
+Default är ett komma, men det är också vanligt att inte ha någon
+interpunktion alls där.
+\Citet[s.~43]{stromquist:upp} förespråkar antingen
+\q{(Ekman 1996:27)} eller \q{(Ekman 1996 s.~27)}.
+För att få den första formen kan man alltså ändra det
+optionella argumentet och det näst sista argumentet:
+
+\begin{qcode}
+\bibpunct[:]{(}{)}{;}{a}{}{,}
+
+\citep[27]{ekman}
+\end{qcode}
+
+Istället för bara ett kolon förekommer också |:~| i samma position,
+för att ge ett (fast) mellanrum efter kolonet.
+
+\section{Litteraturförteckning}
+
+Om man genomgående använder cite-kommandon för att citera
+så kan man skapa litteraturförteckningen automatiskt,
+så att allt man refererar kommer med i den, men inget annat,
+även om det finns fler böcker och artiklar i ens |.bib|-fil.
+
+(Om man skriver ut en referens utan att använda cite-kommandona
+av någon anledning bör man därför lägga in |\nocite{|\emph{nyckel}|}|
+direkt efter så vet \TeX\ att man gjort en refererens där.)
+
+Exakt vad som skrivs ut i bibliografier i vilken ordning och med vilka
+typsnitt varierar mycket mellan olika skolor. Med BibTeX talar man
+om vilken stil man vill ha med kommandot
+|\bibliographystyle|.
+% Jag rekommenderar |plainnat| för uppsatser på engelska.
+% (Det är en särskild stil skriven för \pack{natbib} av
+% dess författare Patrick~W. Daly.)
+% För uppsatser på svenska rekommenderar jag dess svenska
+% variant |sweplnat| som är skriven av Lars Engebretsen
+% på \textsf{NADA}.
+
+Själva litteraturförteckningen läggs sedan in i slutet av uppsatsen
+med kommandot |\bibliography|.
+
+\section{Att köra BibTeX}
+
+När du använder BibTeX så behöver du göra flera körningar för att all
+information ska hamna där den behövs. Detta märker Emacs av och
+defaultkommandot till |C-c C-c| ändras allteftersom.
+När du \TeX{}ar filen får du ett meddelande
+\q{You should run BibTeX to get citations right} och mycket riktigt
+är \q{BibTeX} defaultkommandot nästa gång du kör. Därefter behöver du
+köra om LaTeX, men det vet Emacs också, så fortsätt bara att ge
+defaultkommandot tills du får \q{LaTeX: successfully formatted}.
+
+\section{Att editera \texttt{.bib}-filen}
+
+För att lägga till nya uppslag i en |.bib|-fil, använd menyn
+\emph{Entry-Types} där. Om du \tex\ väljer \emph{Article in Journal}
+får du upp en mall i stil med den i figur~\ref{fig:bibtex}.
+
+\begin{figure}
+  \centering
+  \begin{qcode}
+@Article{,
+  author = 	 {},
+  title = 	 {},
+  journal = 	 {},
+  year = 	 {},
+  OPTkey = 	 {},
+  OPTvolume = 	 {},
+  OPTnumber = 	 {},
+  OPTpages = 	 {},
+  OPTmonth = 	 {},
+  OPTnote = 	 {},
+  OPTannote = 	 {}
+}
+\end{qcode}
+  \caption{Ett exempel på ett ännu oskrivet BibTeX-uppslag}
+  \label{fig:bibtex}
+\end{figure}
+
+Fyll i uppslagen och använd |C-j| för att gå
+till nästa. Du får ledtext i ekoarean. Fälten som börjar med \q{OPT}
+behöver inte fyllas i.
+
+De rekommenderade bibliografistilarna klarar även en del andra fält.
+Du kan \tex\ lägga till ett fält \q{url} med en url till en resurs.
+
+När du är klar, så tryck |C-c C-c| för att avsluta. De frivilliga
+fält som du inte fyllt i tas då bort. Slutligen får du frågan om
+\q{key to use}. Det är denna identifikationsnyckel som du använder
+i cite-kommandona. Det är vanligt att man tar med författarnamn,
+kanske år och början av titeln, ofta avdelade med kolon, men man kan
+välja fritt. I denna text använder jag \tex\ |hellmark:th| för
+Christer Hellmarks \emph{\textbf{T}ypografisk \textbf{h}andbok}
+och |svenskaskrivregler| för \emph{Svenska skrivregler}.
+
+Om det är flera författarnamn så skilj dem åt med ordet \q{and}.
+Det är upp till bibliografistilen hur detta sedan visas i
+litteraturförteckningen. (Tanken är nämligen att samma |.bib|-fil ska
+kunna användas till många olika slags referenser och
+litteraturförteckningar.)
+
+BibTeX kommer att dela upp namnen i förnamn
+och efternamn, och kan ibland behöva hjälp med det genom att man
+använder klamrar, i stil med
+\begin{qcode}
+  author = 	 {Anna {Sågvall Hein}},
+\end{qcode}
+för att inte BibTeX ska tro att Sågvall är ett förnamn. (Det hade
+också funkar bra att skriva \q{Sågvall Hein, Anna}.)
+
+Klamrar kan även användas för att skydda versaler i lägen där många
+bibliografistilar gör gemener av versaler mitt i titlar.
+
+\chapter{Uppsatsens språk}\label{chap:lang}
+
+\section{Att använda flera språk}
+
+Uppsatsens huvudspråk lär vara svenska eller engelska, men beroende på
+ämne kanske du har text på flera olika språk i din uppsats.
+
+För att få den riktigt satt (\tex\ vad gäller avstavningar) så behöver
+du tala om för LaTeX vilka språk som används. Lista då alla ingående
+språk när du laddar paketet \pack{babel}, \tex\ så här:
+
+\begin{qcode}
+\usepackage[english,french,swedish]{babel}
+\end{qcode}
+
+Huvudspråket i din uppsats ska listas \emph{sist}.
+
+Sen kan du byta språk i uppsatsen med |\selectlanguage{|\emph{språk}|}|
+eller med en omgivning |otherlanguage|.
+
+\subsection{Sammandrag på annat språk}
+
+Ett exempel är om du vill ha sammandrag på ett annat språk, \tex\ ett
+engelskt sammandrag i en svensk uppsats:
+
+\begin{qcode}
+\selectlanguage{english}
+\begin{abstract}
+...
+\end{abstract}
+\selectlanguage{swedish}
+...
+\end{qcode}
+
+Observera att språkbytet här sker före att |abstract|-omgivningen
+börjar så att även dess rubrik ska bli på engelska (\q{Abstract}).
+
+Med användning om omgivningen |otherlanguage| hade detta istället sett
+ut så här:
+
+\begin{qcode}
+\begin{otherlanguage}{english}
+\begin{abstract}
+...
+\end{abstract}
+\end{otherlanguage}
+\end{qcode}
+
+\section{Citattecken}
+
+Citattecken skrivs olika på olika språk och det raka
+skrivmaskinstecknet |"| används aldrig till citat i satt text.
+I satt text finns istället två olika dubbla citattecken, och
+på \tex\ engelska används de före respektive efter citat:
+``så här''.
+Det får man genom att skriva |``| och |''| i
+\TeX-filen. På grund av detta är \TeX-moderna i Emacs gjorda så
+att när man trycker på |"|-knappen lägger den istället in |``|
+eller |''| i bufferten. (I en verbatim-omgivning (se
+avsnitt~\ref{sec:verbatim}) kanske du verkligen vill skriva
+tecknet~|"|. Tryck då på |"|-tangenten en gång till.)
+
+På andra språk gör man annorlunda. För att få citattecknen rätt,
+oavsett på vilket språk man skriver, och även när citat hamnar inuti
+andra citat, utan att behöva fundera på det, kan det vara praktiskt
+att använda paketet \pack{csquotes} som definierar kommandot
+|\enquote| som tar ett argument vilket är texten som ska stå inom
+citatet.
+
+Då gör man så här:
+
+\begin{qcode}
+\usepackage[babel]{csquotes}	% i dokumenthuvudet
+\let\q\enquote
+
+\q{You might just as well say,} added the Dormouse,
+who seemed to be talking in his sleep, \q{that
+  \q{I breathe when I sleep} is the same thing as
+  \q{I sleep when I breathe}!}
+\end{qcode}
+
+Väljaren |babel| gör att \pack{csquotes} ger lämpliga citattecken för
+det aktuella språket enligt \pack{babel}.
+Här definieras ett kortare alias |\q| för |\enquote|. 
+
+Med \pack{babel}-språket |british| skulle detta ge följande:
+
+\begin{quotation}
+\begin{otherlanguage}{british}
+\q{You might just as well say,} added the Dormouse,
+who seemed to be talking in his sleep, \q{that
+  \q{I breathe when I sleep} is the same thing as
+  \q{I sleep when I breathe}!}\footnote{%
+  Citatet är från \emph{Alice i Underlandet}.
+  Med |american| skulle istället tvärtom de yttre citattecknen ha
+  blivit dubbla och de inre ha varit enkla.}
+\end{otherlanguage}
+\end{quotation}
+
+På svenska används ibland \q{gåsfötter} som citattecken (som i denna
+text). Om man vill använda sådana för svenska får man tala om det för
+\pack{csquotes} genom att ge en extra väljare i stil med någon av
+dessa två varianter:
+
+\begin{qcode}
+% traditionella svenska »gåsfötter» åt samma håll
+\usepackage[babel,swedish=guillemets]{csquotes}
+
+% numer allt vanligare »gåsfötter« som pekar inåt
+\usepackage[babel,swedish=guillemets*]{csquotes}
+\end{qcode}
+
+\section{Språk med andra skriftsystem}
+
+Om du har språkexempel med arabiska eller hebreiska alfabet så använd
+paketet \pack{arabtex}. Sök på nätet för info om detta!
+För andra skrifter finns det andra lösningar, men kanske inte sådana
+som finns installerade här. Berätta för Per vad du behöver!
+(Fonetisk skrift nämns på s.\,\pageref{page:ipa}.)
+
+\chapter{Diverse}
+
+\section{Programkod och liknande}
+\label{sec:verbatim}
+
+Omgivningen |verbatim| för programkod och liknande som ska återges
+precis som den är fungerar lite annorlunda än i standardklasserna.
+
+En skillnad är att TAB-tecken fungerar som åtta steg framåt.
+Det normala är annars att en serie TAB-tecken behandlas som ett enda
+mellanrum. En annan skillnad är att \textsc{Ascii}-tecknen |`| och~|'|
+verkligen visas på detta sätt i |verbatim| och inte som snyggare
+citattecken \texttt{`} och~\texttt{'}.
+
+Övriga finesser kan man läsa om i kapitel~16 i Memoir-dokumentationen,
+\tex\ om hur man ändrar vilket typsnitt som används för verbatim text
+och hur man lägger till radnummer.
+
+\section{Urlar}
+
+Man vill helst inte radbryta urlar, men om man blir tvungen att göra
+det ändå vill man inte lägga in några bindestreck vid avstavningen,
+eftersom det kan bli oklart om bindestrecket ingår i urlen i så fall.
+Använd
+\begin{qcode}
+\usepackage{url}
+...
+På \url{http://stp.lingfil.uu.se/datorer/tex/} finns ...
+\end{qcode}
+
+Det sköter radbrytning på ett annat sätt. Dessutom kan man skriva
+|~| direkt i argumentet för att få med ett sådant tecken i urlen.
+(Annars betyder det ju hårt mellanslag i \TeX.)
+
+Urlar skrivs normalt med skrivmaskinsstil. Med
+|\urlstyle{same}| kan du ställa om så att de istället skrivs med samma
+stil som den omgivande texten.
+
+Samma kommando kan vara lämpligt även för att ange filnamn,
+dator\-post\-adresser och liknande, fast hellre varianten |\path|
+för en sökväg (som inte gör en webblänk från pdf:en).
+
+\section{Matematik}
+Matematik är vad \TeX\ är allra bäst på, och \class{stpthesis}
+tillför ingenting särskilt vad gäller detta, så information om sådant
+får den som behöver det söka på annat håll, förutom ett par
+anmärkningar om ekvationsnummer, eftersom \class{stpthesis} använder
+samma numrering för matematiska ekvationer och lingvistiska exempel.
+
+Normalt numrerar LaTeX ekvationer kapitel för kapitel och ger dem
+nummer som~5.1. Eftersom språkvetare brukar numrera exempel i en enda
+följd genom hela texten ändras detta av \class{stpthesis}. Om du vill
+numrera kapitel för kapitel så använd väljaren |eqnobychapter|.
+
+Normalt sitter ekvationsnummer till höger. Exempelnummer sitter dock
+alltid till vänster. Om du har en uppsats med både ekvationer och
+exempel kan du överväga att använda väljaren |leqno| för att få även
+ekvationsnumren till vänster för att få ett mer enhetligt utseende.
+
+\section{Typsnitt}
+
+Typsnitten är normalt de som ingår i Uppsala universitets grafiska
+profil, nämligen Berling antikva och Gill Sans. Universitet
+har licens för att använda dessa för universitets verksamhet, vilket
+även gäller studenter som gör saker \q{inom universitets verksamhet}.
+
+Genom att ange en väljare direkt till klassen kan man ange vilka
+fonter man vill använda. Defaultet är |uufonts| och de andra
+möjligheterna är |times| och |cm|.
+Med |times| används standardpostscriptfonterna
+times/helvetica/courier, medan |cm| står för \emph{computer
+modern} vilket är den typsnittsfamilj som annars är standard i \TeX.
+
+\section{Memoir är flexibelt}
+
+Om du inte tycker om utseendet så går det att ändra på rätt mycket.
+Klassen \class{memoir} som \class{stpthesis} bygger på är mycket
+mer flexibel än standardklasserna.
+Se \path{/usr/share/texmf/doc/latex/memoir/memman.pdf}
+för dokumentationen till \class{memoir} för närmare detaljer. (Det är
+en bok på över 250~sidor och finns utskriven i en tidskriftsamlare med
+etiketten \TeX\ i stora datorsalen.)
+
+\chapter{Problem}
+
+\section{Placering av figurer och tabeller}\label{sec:placering}
+
+Vid inläggning av figurer och tabeller kan man ange en
+\emph{float position}. Om man inte anger detta får man en
+defaultplacering som vanligen blir högst upp eller längst ner på en
+sida där figuren ryms, helst den då aktuella sidan.
+
+Algoritmen som sköter denna placering är komplicerad. Den tar hänsyn
+bl.\,a. till att figurerna ska komma i samma ordning som de ligger i
+texten, att alla sidor ska vara lagom välfyllda och inte ha för stor
+del figurer på sig.
+
+I allmänhet är ett starkt råd att om du inte blir nöjd med var LaTeX
+placerar en viss figur eller tabell, så vänta med att krångla med
+detta det tills din text är i princip slutgiltig, i alla fall för det
+kapitel det gäller! Annars kan det ändå visa sig att en smärre
+ändring i texten som gör ett avsnitt lite längre eller kortare kommer
+att leda till helt nya förutsättningar för sidbrytningen, och då har
+du bara slösat bort tid på att stångas mot hur LaTeX gör detta.
+
+\section{Dåliga raddelningar}
+Ibland är det svårt att dela av raderna på bra ställen, \tex\ om du
+har långa ord som \TeX\ inte vet hur den ska avstava. Normalt är \TeX\
+mycket nogräknad med hur snygga raderna måste bli, och om den inte
+lyckas uppfylla sina höga krav  ger den upp och låter en bit sticka ut
+i marginalen för att användaren ska fixa till det.
+
+I \class{stpthesis} är det ändrat så att \TeX\ ändå gör så gott det
+går.  I nödfall blir mellanrummen mellan ord då utsträckta alldeles för
+mycket.
+Om du ger dig på att förbättra sådana dåliga raddelningar blir det
+enklare att se vilka rader \TeX\ har problem med om du gör den nogräknad
+igen. Det kan du göra med kommandot |\fussy|.
+% Om du använder väljaren |draft| till \class{stpthesis}
+% för att visa att din text än så länge
+% bara är ett utkast så är \TeX\ också nogräknad med orddelningar och
+% visar dessutom tydligt var det är problem med en svart blaffa i
+% marginalen.
+
+Ibland ger avstavningsreglerna felaktiga resultat. Då kan du tala om
+uttryckligen hur ord ska avstavas med ett kommando |\hyphenation| före
+texten:
+
+\begin{qcode}
+\hyphenation{sats-yta sats-ytan}
+\end{qcode}
+
+\bibliography{exempel}
+
+
+\end{document}

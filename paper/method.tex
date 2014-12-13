@@ -1,0 +1,130 @@
+ % -*- root: thesis.tex -*-
+\chapter{Method}\label{method}
+
+\section{Framework}
+\label{framework}
+
+Separate modules were developed for the construction of DSMs, training and testing distributional vector compositions toward machine learning classifiers, as well as a module for results evaluation. Altogether, this makes the evaluation framework used for the experiments in this thesis.
+
+\subsection{Distributional semantic model builder}
+\label{sec:distributional_model_builder}
+
+This module builds the DSM according to a set of parameters:
+
+\begin{enumerate}
+    \item Context window size -- see chapter \ref{background-window-sizes}.
+    \item DSM weighting -- see chapter \ref{background-dsm-weighting}.
+    \item Context weighting -- see chapter \ref{background-feature-weighting}.
+    \item Word weighting -- see chapter \ref{background-feature-weighting}.
+    \item Context selection -- see chapter \ref{background-dsm-context-selection}.
+    \item Secondary DSM -- Providing a secondary DSM would merge two DSMs into one, giving the ability to add domain specific content. This is simply done by summing co-occurrence frequencies.
+    \item Stopwords filtering -- Ignoring stop words is a common occurrence in information retrieval tasks. Stopwords are removed \emph{before} applying any weighting mechanism.
+\end{enumerate}
+
+
+\subsection{Utterance parser}
+\label{sec:utterance_parser}
+
+This module parses utterances into a binary \emph{composition tree}, where the leaves are the distributional vectors of the utterance, and each node represents the compositionality function to be used on the children vectors. See figure \ref{fig:parse_tree}.
+
+\begin{figure}[H]
+\centering
+\begin{forest}
+  for tree={l+=1cm} % increase level distance
+  [linear\_additive(1{,} 1)
+    [linear\_additive(0.25{,} 0.25)[$v(\text{the})$][$v(\text{cat})$]]
+    [linear\_additive(0.25{,} 0.25)[$v(\text{slept})$][$v(\text{peacefully})$]]
+  ]
+\end{forest}
+\caption{A parse tree of the centroid model. The distributional vector composer traverses in an infix order over the tree.}
+\label{fig:parse_tree}
+\end{figure}
+
+
+\subsection{Distributional vector composer}
+\label{sec:distributional_vector_composer}
+
+The distributional vector composer takes a composition tree as an argument, traversing the tree in an \emph{infix} order, and step-by-step applies the given compositionality functions to its children vectors. This returns a \emph{distributional composition vector}.
+
+\subsection{Sentiment classifier}
+\label{sec:sentiment_classifier}
+
+The sentiment classifier contains the training and testing data, sends off the sentences to the utterance parser for parsing, and thereafter to the distributional vector composer for creating the distributional composition vectors. These composition vectors are then used as the instances in the classifier's training session, together with the corresponding sentiments for the original utterances. The utterances are also converted to their distributional composition vectors in the testing session for predicting the sentiment of the utterance.
+
+\section{Experimental setup}
+
+\subsection{Data}\label{method-data}
+
+Training and testing data is a set of movie review sentences introduced by \textcite{Pang2005Seeing}. It is made up of 10,662 polarized reviews evenly split between positive and negative instances, and is particularly chosen for its sentence level sentiment classification. It is a commonly used data set for this type of sentiment classification task. For samples, see example \ref{ex:examplesentences}.
+
+\eenumsentence{
+   \label{ex:examplesentences}
+   \item this is a film well worth seeing , talking and singing heads and all .
+   analyze that " is one of those crass , contrived sequels that not only fails on its own , but makes you second-guess your affection for the original.
+   \item this bond film goes off the beaten path , not necessarily for the better .
+   \item a movie that will touch the hearts of both children and adults , as well as bring audiences to the edge of their seats .
+}
+
+For construction of DSMs, I used a corpus of 330 MB worth of text from English Wikipedia. The main motive here is to have a source of neutral, high-quality text with a broad domain of topics. The corpus was normalized by removing any non-alphanumeric characters, keeping smileys and emoticons, and transformed into lowercase letters.
+
+Using the dataset in this paper, \textcite{Socher2013Recursive} have gotten an F1 score of 85.4\%, which is considered the current state-of-the-art.
+
+\subsection{Metrics}\label{method-evaluation}
+
+Ten percent of the movie review data set is used for testing while the rest is used during  training session.
+
+The standard metrics for measuring classification accuracy are precision and recall, as are used in these results as well. Presented along the mentioned metrics is the F1 score, giving a combined score based on the precision and recall values. These are calculated as shown in equation \ref{eq:precision-recall}.
+
+\begin{equation} \label{eq:precision-recall}
+\begin{spreadlines}{10pt}
+\begin{aligned}
+\text{Precision} &= \frac{\text{true positives}}{\text{true positives} + \text{false positives}}
+\\
+\text{Recall} &= \frac{\text{true positives}}{\text{true positives} + \text{false negatives}}
+\\
+\text{F1} &= \frac{2 \times \text{precision} \times \text{recall}}{\text{precision} + \text{recall}}
+\end{aligned}
+\end{spreadlines}
+\end{equation}
+
+\subsection{Choosing a classifier}\label{method-choosing-a-classifier}
+
+There are mainly two aspects in the experiment to consider when picking a classifier. First and foremost, because of the multitude of data and the uncompressed nature of the DSM, it is difficult to keep all of the training instances in memory at once. The classifier should be able to learn in an iterative fashion of only having to keep a subset of all instances in memory, i.e.~an \emph{online} classifier. The other aspect is the fact that the model will have a large number of features, as such it would be beneficial if the classifier would be optimized at handling many possibly noisy features.
+
+Using the \emph{Stochastic Gradient Descent} (SGD) optimization algorithm it is possible to train linear classifiers using subsets of the training data, living up to the online learning criterion. The \emph{Support Vector Machine} (SVM) is a commonly used linear classifier in computational linguistic areas, and previous research has concluded that it performs well compared to other classifiers in sentiment classification tasks \cite{Yao2011Sentiment}. Based on this, the SVM is our choice of classifier.
+
+\subsection{Baseline}\label{method-baseline}
+
+As a baseline, I used a SVM model using a \emph{tfidf} weighted term-document matrix for training the SVM classifier. This is a common vector space model in information retrieval as a tool for finding arbitrary topics in document collections. See \cref{tbl:baseline-results} for results.
+
+\begin{table}
+\centering
+\begin{tabular}{llll}
+\toprule
+ \multicolumn{1}{c}{Polarity} & \multicolumn{1}{c}{Precision} & \multicolumn{1}{c}{Recall}
+ & \multicolumn{1}{c}{F1} \\
+\midrule
+Neg      & 0.73      & 0.74   & 0.74     \\
+Pos      & 0.74      & 0.73   & 0.73     \\
+Average      & 0.73      & 0.73   & 0.73     \\
+\bottomrule
+\end{tabular}
+\caption{Baseline results. Classified with the SVM classifier explained in \cref{method-choosing-a-classifier}.}
+\label{tbl:baseline-results}
+\end{table}
+
+\subsection{Experiment workflow}\label{method-experiment-workflow}
+
+Since there are too many available parameters for testing each and every combination, each model parameter, as listed in \cref{model}, will be tested on its own using the setting which performs best when evaluating the next step. The order of the parameter testing will affect the end result, and creating an optimal workflow is difficult to do in advance. Hence the order will rather be a mix of my intuition of a well designed order, as well as being motivated by what makes most sense from a pedagogical perspective.
+
+The parameters are to be tested in the following order:
+
+\begin{enumerate}
+    \item Window size
+    \item DSM weighting
+    \item Removal of stop words
+    \item Adding domain specificity
+    \item Context weighting
+    \item Word weighting
+    \item Context selection
+\end{enumerate}

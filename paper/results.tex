@@ -1,0 +1,223 @@
+ % -*- root: thesis.tex -*-
+\chapter{Results and discussion}\label{results}
+
+This chapter lists the results as introduced in the previous chapter. Each section will list the parameter variations with their corresponding F1, precision, and recall values, while discussing the results. The best evaluation scores for given metrics are emphasized in each column, where F1 score generally decides which parameter setting to pick for coming experiments. A more comprehensive discussion is a part of revealing the final configuration.
+
+\section{Window size}\label{results-window-size}
+
+\Cref{tbl:result-window-size} lists the results of running the classifiers against various
+window sizes. See \cref{background-window-sizes} for details.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{llll}
+\toprule
+ \multicolumn{1}{c}{Window size} & \multicolumn{1}{c}{F1} & \multicolumn{1}{c}{Precision}
+ & \multicolumn{1}{c}{Recall} \\
+ \midrule
+2 + 2           & 0.603329          & 0.637012          & 0.617783          \\
+5 + 5           & 0.607171          & 0.67205           & 0.631194          \\
+10 + 10         & \textbf{0.708129} & \textbf{0.714285} & \textbf{0.709513} \\
+20 + 20         & 0.700301          & 0.707315          & 0.701975          \\
+\bottomrule
+\end{tabular}
+    \caption{Average scores for each window size, using a PPMI weighted DSM.}
+    \label{tbl:result-window-size}
+\end{table}
+
+Window sizes which create DSMs of more associative natures, i.e. larger window sizes, seem to perform better. Intuitively this should make sense, since paradigmatic relations rarely catch what could be considered attitudinal information; in a paradigmatic distribution \emph{bad} is a close neighbor to \emph{good}, and the paradigmatic neighbors to \emph{cotton candy} do not bring any of the associations we usually connect to it.
+
+\section{DSM weighting}\label{results-space-weighting}
+
+Because of the previous results in \cref{results-window-size}, the window size to be used is 10+10 when running the space weighting experiments. See \cref{tbl:result-space-weighting} for scores, where you will see that PPMI performs best given a 10+10 window size. \cref{background-dsm-weighting} contains details about DSM weighting.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lrrr}
+\toprule
+ \multicolumn{1}{c}{Weighting} & \multicolumn{1}{c}{F1} & \multicolumn{1}{c}{Precision}
+ & \multicolumn{1}{c}{Recall} \\
+ \midrule
+None            & 0.341719          & 0.60667           & 0.502786          \\
+PPMI            & \textbf{0.708129} & \textbf{0.714285} & \textbf{0.709513} \\
+EPMI            & 0.666205          & 0.669963          & 0.667316          \\
+PLMI            & 0.503742          & 0.532896          & 0.52668           \\
+\hline
+\end{tabular}
+\caption{F1, Precision, and Recall results using different weighting mechanisms, as defined in chapter \ref{background-dsm-weighting}. Window size used is 10+10.}
+\label{tbl:result-space-weighting}
+\end{table}
+
+The best weighting method for associative DSMs is PPMI. This corresponds with previous studies on DSM weighting methods. Interestingly enough, applying EPMI on DSMs with smaller window sizes enhances the result significantly, so while it does seem to be possible to achieve fairly decent results using other combinations of weighting and window size, these appear to be less stable when experimenting with other parameters. I have yet to find a parameter setting using smaller window sizes with alternative weighting schemes that out-performs the final model.
+
+
+\section{Removal of stop words}\label{removal-of-stop-words}
+
+The stop words are removed \emph{before} performing the DSM weighting. See \cref{tbl:results-stopwords} for results. Removal of stop words does not affect the results in a beneficial manner neither for removal of context nor utterance words. Why removal of stop words is tested is explained briefly in \cref{sec:distributional_model_builder}.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lrrr}
+\toprule
+  & \multicolumn{1}{c}{F1} & \multicolumn{1}{c}{Precision}
+ & \multicolumn{1}{c}{Recall} \\
+ \midrule
+None            & \textbf{0.708129} & \textbf{0.714285} & \textbf{0.709513} \\
+Contexts        & 0.668122          & 0.669705          & 0.668727          \\
+Utterance words & 0.682691          & 0.685202          & 0.683336          \\
+Contexts+words  & 0.609653          & 0.678644          & 0.633566          \\
+\hline
+\end{tabular}
+    \caption{Results of removing stop words from the DSM. Window size: 10+10, weighting: PPMI.}
+    \label{tbl:results-stopwords}
+\end{table}
+
+The fact that removing stop words from either the context of the distributional vector or the utterance does not improve performance is an interesting phenomenon, considering how common such a procedure otherwise is in information retrieval tasks. The effect of function words and how they can be used to manipulate the context of the DSM is surely something that would be an interesting topic for further studies.
+
+
+\section{Adding domain specificity}\label{adding-domain-specific-context}
+
+Adding movie reviews training data to the model, which is to be considered domain specific content, does not increase performance. Why inclusion of domain specific content is tested is explained in \cref{sec:distributional_model_builder}.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lrrr}
+\toprule
+ \multicolumn{1}{c}{Corpus} & \multicolumn{1}{c}{F1} & \multicolumn{1}{c}{Precision}
+ & \multicolumn{1}{c}{Recall} \\
+ \midrule
+Wiki            & \textbf{0.708129} & \textbf{0.714285} & \textbf{0.709513} \\
+Wiki + training & 0.695549          & 0.696601          & 0.695918          \\
+\hline
+\end{tabular}
+    \caption{Results of adding training data to the word space. Window size: 10+10, weighting: PPMI.}
+    \label{tbl:results-domain}
+\end{table}
+
+
+Domain specific content was hypothesized to bring better results than not, by training on the provided training data. My interpretation of this is that there was either too little training data for learning new linguistic domains, as I consider movie reviews to be, or that the mix of two different domains into one DSM is rather more confusing than helpful for the model.
+
+
+\section{Context weighting}\label{weighting-columns-and-rows-in-the-word-space}
+
+Weighting specific contexts does not increase performance in the case of a DSM with a window size of 10+10. See \cref{background-feature-weighting} for details.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lrrr}
+\toprule
+  & \multicolumn{1}{c}{F1} & \multicolumn{1}{c}{Precision}
+ & \multicolumn{1}{c}{Recall} \\
+ \midrule
+None            & \textbf{0.708129} & \textbf{0.714285} & \textbf{0}.709513 \\
+\emph{idf}             & 0.671952          & 0.724149          & 0.686413          \\
+Gini-index      & 0.694719          & 0.739686          & 0.706048          \\
+\hline
+\end{tabular}
+    \caption{Results of adding weighting to columns. Window size: 10+10, weighting: PPMI.}
+    \label{tbl:results-weighting-features}
+\end{table}
+
+
+\section{Word weighting}\label{results-weighting-words}
+
+Weighting the distributional vectors of each utterance word with scalar values calculated by neither \emph{idf} nor Gini-index seem to improve performance. See \cref{background-feature-weighting} for details.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lrrr}
+\toprule
+ & \multicolumn{1}{c}{F1} & \multicolumn{1}{c}{Precision}
+ & \multicolumn{1}{c}{Recall} \\
+ \midrule
+None            & \textbf{0.708129} & \textbf{0.714285} & \textbf{0.709513} \\
+\emph{idf}             & 0.697238          & 0.714254          & 0.701975          \\
+Gini-index      & 0.603461          & 0.692121          & 0.634156          \\
+\hline
+\end{tabular}
+    \caption{Results of adding weighting schemes to words as scalar values in the utterance. Window size: 10+10, weighting: PPMI.}
+    \label{tbl:results-weighting-words}
+\end{table}
+
+Weighting of either words or columns does little to affect the result. My interpretation of this is that the correlation of the context words is too delicate for simple feature weighting. If the weighting needs to be improved, it should be done in correspondence with the initial DSM weighting, rather than as an independent weighting scheme as done here.
+
+\section{Context selection}\label{compressing-the-word-space-feature-selection}
+
+Applying context selection improves the results, where selection by context vector length is better than summation of context. See \cref{tbl:results-feature-selection} for results, and \cref{background-dsm-context-selection} for details.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lllll}
+\toprule
+ \multicolumn{1}{c}{Weighting} & \multicolumn{1}{c}{N contexts} & \multicolumn{1}{c}{F1} & \multicolumn{1}{c}{Precision}
+ & \multicolumn{1}{c}{Recall} \\
+ \midrule
+length          & 500               & 0.651737          & 0.681782          & 0.661814          \\
+~               & 1000              & 0.659086          & 0.709866          & 0.674211          \\
+~               & 2000              & 0.646023          & 0.707617          & 0.664918          \\
+~               & 3000              & \textbf{0.752076} & \textbf{0.752164} & \textbf{0.752072} \\
+~               & 4000              & 0.737595          & 0.744773          & 0.739323          \\
+~               & 5000              & 0.516312          & 0.710203          & 0.587709          \\
+~               & 10000             & 0.596466          & 0.721539          & 0.636202          \\
+~               & 15000             & 0.596466          & 0.721539          & 0.636202          \\
+~               & 20000             & 0.596466          & 0.721539          & 0.636202          \\
+~               & 30000             & 0.596466          & 0.721539          & 0.636202          \\
+~               & 40000             & 0.596466          & 0.721539          & 0.636202          \\
+~               & 50000             & 0.596466          & 0.721539          & 0.636202          \\
+~               & 60000             & 0.596466          & 0.721539          & 0.636202          \\
+~               & 80000             & 0.596466          & 0.721539          & 0.636202          \\
+~               & 100000            & 0.596466          & 0.721539          & 0.636202          \\
+sum             & 500               & 0.689111          & 0.698652          & 0.69158           \\
+~               & 1000              & 0.636127          & 0.703597          & 0.657459          \\
+~               & 2000              & 0.681463          & 0.71108           & 0.689949          \\
+~               & 3000              & 0.728748          & 0.737466          & 0.730912          \\
+~               & 4000              & 0.707386          & 0.722132          & 0.711321          \\
+~               & 5000              & \textbf{0.739104} & \textbf{0.748253} & \textbf{0.741245} \\
+~               & 10000             & 0.596466          & 0.721539          & 0.636202          \\
+~               & 15000             & 0.596466          & 0.721539          & 0.636202          \\
+~               & 20000             & 0.596466          & 0.721539          & 0.636202          \\
+~               & 30000             & 0.596466          & 0.721539          & 0.636202          \\
+~               & 40000             & 0.596466          & 0.721539          & 0.636202          \\
+~               & 50000             & 0.596466          & 0.721539          & 0.636202          \\
+~               & 60000             & 0.596466          & 0.721539          & 0.636202          \\
+~               & 80000             & 0.596466          & 0.721539          & 0.636202          \\
+~               & 100000            & 0.596466          & 0.721539          & 0.636202          \\
+\hline
+\end{tabular}
+    \caption{Results of performing context selection to the DSM. Window size: 10+10, weighting: PPMI.}
+    \label{tbl:results-feature-selection}
+\end{table}
+
+Despite SVM being known to handle large amount of features in a robust manner, context selection is still a fundamental part of higher performance, creating significantly better results. Initial experiments show that applying the context selection after the weighting is key in selecting good context candidates. PPMI weighting appears to remove any function words that would otherwise be included. Based on the performance of stop words filtering, I wonder if there could be interesting results from trying differing weighting schemes between the DSM weighting and when choosing context words. PLMI could be a good candidate, based on its top 20 context words in \cref{tbl:featureselection-weights}.
+
+\section{Final configuration}
+
+The result of the final configuration is based on the top 3000 context length from last section. In \cref{tbl:final-results} the configuration is compared against the original baseline. The 2 percentage points performance increase is not a statistically significant improvement.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lccc|ccc}
+\cline{2-7}
+~ & \multicolumn{3}{c|}{DSM} & \multicolumn{3}{c}{Baseline} \\
+\cline{2-7}
+~        & \multicolumn{1}{c}{F1} & \multicolumn{1}{c}{Precision} & \multicolumn{1}{c|}{Recall}  & \multicolumn{1}{c}{F1} & \multicolumn{1}{c}{Precision}
+ & \multicolumn{1}{c}{Recall} \\
+\cline{2-7}
+Negative     & 0.76 & 0.75  & 0.76 & 0.74     & 0.73      & 0.74   \\
+Positive     & 0.75 & 0.75  & 0.74 & 0.73     & 0.74      & 0.73   \\
+Average & \textbf{0.75} & \textbf{0.75}  & \textbf{0.75} & 0.73     & 0.73      & 0.73   \\
+\cline{2-7}
+\end{tabular}
+    \caption{Results of the final model. Window size: 10+10, weighting: PPMI, feature selection: top 3000 contexts using context vector length.}
+    \label{tbl:final-results}
+\end{table}
+
+The fact that the baseline \emph{tfidf} model and a DSM with an associative window size perform similarly might be because in some sense they model similar structures. The term-document matrix which makes up the \emph{tfidf} model is traditionally used in information retrieval tasks for answering what a document is \emph{about}, assuming the \emph{bag-of-words} hypothesis \parencite{Turney2010From}. The associative DSM could be seen as an approximation of such a model.
+
+The lack of compositional operation testing here depends on the fact that it was difficult to find alternative compositional operations that could be performed on entire utterances. Most previously published operations depend in some way on methods related to element-wise multiplication. When performed on entire utterances, this would cause the length of the sparse distributional composition vector to reach zero. Any methods trying to mix multiplicative and additive models gave no promising results. I believe this is the key area for further improvements in classification using distributional semantic models.
+
+As previously discussed, the lack of compression on the DSM increases the spatial and computational cost exponentially. From a developer's perspective, this meant a great deal of optimization for assuring the model would fit in memory. Still, the training and testing take considerably longer time for composing the vectors compared to the baseline model. Any models meant for practical use without doubt need to use more scalable versions of DSM.
+
+Based on this, it appears that there is a strong dependency between a given parameter of the DSM and the remaining variables; finding the optimal setting for a certain parameter will not necessarily translate to an optimal setting if you change another value in the model configuration.
+
+With that in mind, how the results of these experiments would translate to a DSM like LSA or Random Indexing is uncertain; not all calculations would be readily available for each model (LSA, for instance, already has built-in dimensionality reduction through singular value decomposition), and what the compression does to affect any compositional operations must be further investigated.

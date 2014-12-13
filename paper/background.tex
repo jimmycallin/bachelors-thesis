@@ -1,0 +1,105 @@
+ % -*- root: thesis.tex -*-
+\chapter{Background}
+\label{background}
+
+\section{Sentiment analysis}
+\label{background-sentiment-classification}
+
+Sentiment analysis has become a hot topic in recent years, and is of increasingly growing importance in industrial sectors related to business intelligence and data mining. We have started to see a wide variety of consumer-end applications, mainly driven by the desire to find computerized methods for automatic market analysis within a large variety of topics. In a world of \emph{Big Data}, the possibilities of actionable early warning systems are of great interest for companies with a large social media exposure.
+
+This is not only attractive from a market analysis perspective, but also within investment banking, security intelligence, public opinion polls, and other areas where predictive analytics are of interest \parencite{Karlgren2012Usefulness}. Some of the research has been motivated by trying to find an attitudinal signal in social media data which predicts the rise and fall of stock market shares, with some successful results \parencite{Bollen2011Twitter}. Others have found close correspondence between parties' and politicians' popularity and their sentiment ranking on Twitter \parencite{Tumasjan2010Predicting}.
+
+Although the current applications may be driven primarily by relatively straightforward data analysis, there are important aspects of sentiment in other text analytics areas as well. That mood\footnote{While there might be subtle differences between the mood, attitude, and sentiment of an utterance, there is no established terminology within the field. In this thesis these words are used interchangeably.} affects the flow of text is not a controversial statement, which makes the relevance of sentiment analysis for text generation applications such as machine translation and speech synthesis interesting \parencite{Wei2010Cross,Alm2005Emotions}.
+
+From a technological perspective, the sentiment classifier predicts an attitude in text, where the text is either on a document level or a sentence level \parencite{Kim2013Beyond}. While certain psychologists argue for at least six basic human emotions, the field of study so far has mainly been focused on the binary identification of positive and negative sentiments in text. While the view of mood as a binary classification problem is clearly a gross oversimplification, even this simple relationship is not without its problems. The attitude of utterances is often in the eye of the beholder. For instance, would you classify \emph{the food was good, but the service was awful} as a positive or negative utterance? The mood of an utterance is a  delicate research problem, and the assumptions made here cannot be argued to represent an actual model of the human mood.
+
+Early, naive methods of sentiment classification belong to rule-based classification models mainly using pre-compiled word lists. While a computationally efficient and transparent method, it is of limited explanatory power with regard to the complexity of sentiment. The sentiments of words are rarely, if ever, universal, and context is of great importance: whether a word such as \emph{rise} determines positive or negative sentiment depends entirely on the domain of the document, e.g. stock market analysis or global warming discourse.
+
+Data driven methods have, for the last decade, been the preferred way to go, and mainly use popular machine learning classifiers such as Support Vector Machines (SVM), Naive Bayes, Logistic Regression, or k-Nearest Neighbors \parencite{Feldman2013Techniques}. By manually classifying a large number of texts as one of the desired sentiments, or potentially neutral when attitude is missing, you have compiled a data set which to divide into a larger set for training, and a testing set for evaluation. When the training instances are manually annotated, as in most sentiment classification methods, it is called \emph{supervised learning}. There are also experiments in avoiding pre-classified training data, and instead extrapolate from a select few words prototypical for each sentiment class. These typically belong to \emph{unsupervised learning methods}, which emphasize the lack of manually annotated data.
+
+By simple means, given a high enough quality of training data, it is possible to train classifiers to achieve relatively high scores in evaluation. The problem lies in compiling attitudinally classified datasets, which are mainly available for only a select few languages.
+
+\section{The usefulness of distributed representations}
+\label{background-non-lexical-models}
+
+Comprehensive training data for most classification tasks are rare, especially outside of the English language. Even for English the training data for sentiment classification is almost guaranteed to be too patchy to contain sufficient linguistic information to cover all possible attitudinal situations. This is especially true when applying classification tasks in media composed of user-generated content, where the productive and creative nature of these domains creates a linguistic environment filled with noisy, unreliable, unorganized text. This forms a demand for models that are able to take these aspects into consideration.
+
+Classification models that are meant to perform well on user-generated content should be able to learn about new situations \emph{online}, i.e. learning while doing, and not depend entirely on attitudinally classified training data. Distributed representations of words make it possible to compare words in a quantified manner. This is where distributional semantic models become relevant.
+
+\section{Distributional semantic models (DSM)}
+\label{background-distributional-semantics}
+
+
+Distributional semantics is a research area whose purpose is to automatically model semantic information using word collocation data from large text collections, which enables quantification of \emph{word similarity} \parencite{Schuetze1993Word}. The motive behind applying DSMs\footnote{While these models also are known as \emph{word spaces}, \emph{vector spaces}, and \emph{semantic spaces}, I will use \emph{distributional semantic models} exclusively in this thesis.} on sentiment classification comes back to the high productivity of language in social media contexts, where new words, hashtags, and misspellings occur frequently enough to be difficult to ignore. By generalizing words to a higher form of semantic representation, the goal is to remove the problems linguistic productivity usually introduces, since the generalization gives context to words not available in the training set.
+
+Even if linguistic productivity would not be a problem, DSMs are still of great interest. There are manually compiled lexical resources such as WordNet readily available, providing manually annotated semantic representations. Creating these resources are often expensive and tedious and only available for a select few languages. It also lies in their nature to be based on linguistic assumptions including the personal bias of semantic relatedness which is next to impossible to avoid.
+
+The DSM is a \emph{vector space} of \emph{distributional vectors} built from word co-occurrence counts in large corpora. These distributional vectors are quantified semantic representations of each word available in the corpus. By using a \emph{similarity measure} for calculating how much the words' context correlate, it is possible to compare these distributional vectors to all other available words' semantic representation \parencite{Schuetze1993Word}.
+
+J. R. Firth uttered \emph{you shall know a word by the company it keeps}; an inspiration for \emph{the distributional hypothesis} \parencite{Sahlgren2008Distributional}. The distributional hypothesis is the central cornerstone of distributional semantics, stating:
+
+\begin{quote}
+[W]ords that occur in the same contexts tend to have similar meaning \parencite{Pantel2005Inducing}.
+\end{quote}
+
+What could be considered as context is deliberately vague, since different types of context seem to generate different types of semantic representations. Most experiments in modeling DSMs use word co-occurrence with varying sizes of maximum word distance. There have been further experimentations on the inclusion co-occurrence distance, part-of-speech tags, word order, and dependency structures to affect the context. While tagging with linguistic data in a few cases have shown to improve evaluation performance, they typically lead to sparse data problems \parencite{Sahlgren2008Distributional}.
+
+The most basic of DSMs is the word co-occurrence matrix. This is the basis of all other models, where each row represents a specific word and each column initially represents the frequency of each word's appearance within context of the focus word (see \cref{tbl:coffeetea} for example). The drawback of this model is its computational and spatial inefficiency. While there are other more efficient models available that represent various DSMs, such as \emph{LSA} \parencite{Landauer1997Solution}, \emph{HAL} \parencite{Lund1995Semantic}, and \emph{Random Indexing} \parencite{Kanerva2000Random}, the effect of the compression algorithms would be an uncertain variable in the classification task. As such, I will continue to use the basic co-occurrence matrix.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{lll}
+    \toprule
+    ~      & drink & abuse \\ \addlinespace
+    \hline
+    coffee & 780   & 220   \\
+    tea    & 660   & 80    \\
+    \bottomrule
+    \addlinespace
+    \end{tabular}
+    \caption{A simple co-occurrence matrix of \emph{coffee} and \emph{tea}, in relation to \emph{drink} and \emph{abuse}. Each row defines a distributional vector of words seen in the corpus, and each column defines the number of times \emph{drink} or \emph{abuse} has been mentioned within context of the word in focus. }
+    \label{tbl:coffeetea}
+\end{table}
+
+
+The initial building process of a basic DSM is quite straight-forward. When reading the corpus, co-occurrence counts are collected by focusing on each word in the text and gathering occurrence statistics about the neighboring words within a set maximum distance (hereafter called a \emph{context window}). The order of the words within the context does not matter. After processing a large amount of data, each row in the matrix will represent the \emph{distributional vector} of a word. By comparing the \emph{similarity} of distributional vectors, we obtain the similarity of word senses. See \cref{tbl:coffeetea} for a small example of a co-occurrence matrix defining a DSM, and \cref{tbl:neighbors} for examples of the closest neighbors to two common words using the cosine distance.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ll}
+\toprule
+Spectacular           & Horrible           \\
+\hline
+stunning: 0.109       & horrid: 0.0995     \\
+scenic: 0.103         & awful: 0.0947      \\
+impressive: 0.103     & foyster: 0.0787    \\
+amazing: .0871        & terrible: 0.0784   \\
+vistas: .0829         & horrific: 0.0770   \\
+elaborate: .0815      & lehnert: 0.0764    \\
+dramatic: .0810       & calumny: 0.0761    \\
+shivanasamudra: .0801 & horrifying: 0.0729 \\
+breathtaking: .0797   & edifying: 0.067    \\
+magnificent: 0.078    & abhorrent: 0.0667  \\
+\bottomrule
+\end{tabular}
+\caption{Closest cosine neighbors in a DSM built from 330MB Wikipedia data with a context window of 2+2, i.e. a maximum of 2 words to the left and 2 words to the right of the focus word.}
+\label{tbl:neighbors}
+\end{table}
+
+
+\section{Compositionality in distributional models}
+\label{background-compositionality}
+
+The idea that the meaning of an utterance is composed by its word members takes its initial steps in \emph{the principle of compositionality}, stating:
+
+\begin{quote}
+The meaning of a complex expression is a function of the meaning of its parts and of the syntactic rules by which they are combined \parencite{Partee1990Mathematical}.
+\end{quote}
+
+Traditionally, compositionality in computational linguistics has been developed using logical frameworks \parencite{Kartsaklis2014Compositional}. Distributional compositional models step beyond this, trying to solve the problem using data driven methods based on distributional semantic modeling.
+
+In compositional distributional semantic models, the purpose is to use distributional vectors retrieved from DSMs and compose them by a composition operator. The most commonly used operator in information retrieval is a weighted additive model:
+
+\begin{equation}\vec{w}_{\text{comp}} = \alpha \vec{w}_1 + \beta \vec{w}_2\end{equation}
+
+Where $\vec{w}_{\text{comp}}$ would be the composed vector of the words $\vec{w}_1$ and $\vec{w}_2$, computed by weighted element-wise addition. The weights are often set to 0.5 for creating an averaged centroid vector. While the most commonly used operator, it lacks several important aspects of language for making up a probable model of compositionality, where the arguably most important factor is non-commutativity, i.e. an additive function does not differentiate between \emph{coffee house} and \emph{house coffee}. Other compositional operators have been looked into as well, mainly of multiplicative nature, such as \emph{element-wise multiplication} which multiplies each component pair of two corresponding vectors, and \emph{tensor product} or \emph{circular convolution} which works in similar fashion. See \textcite{Kartsaklis2014Compositional} for a comprehensive review of different distributional compositional operators.

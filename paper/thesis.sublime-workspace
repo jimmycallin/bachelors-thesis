@@ -1,0 +1,841 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"rmeove_sto",
+				"remove_stop_words_columns"
+			],
+			[
+				"remove_stop_words_",
+				"remove_stop_words_rows"
+			],
+			[
+				"remove_sto",
+				"remove_stop_words_columns	param"
+			],
+			[
+				"space",
+				"space_normalization"
+			],
+			[
+				"remove_",
+				"remove_columns	True"
+			],
+			[
+				"col_wo",
+				"col_words_indices	statement"
+			],
+			[
+				"row",
+				"row2id"
+			],
+			[
+				"defaul",
+				"default_value	1"
+			],
+			[
+				"words_",
+				"words_weighting	statement"
+			],
+			[
+				"weig",
+				"weight_vector	statement"
+			],
+			[
+				"word_",
+				"words_weights	param"
+			],
+			[
+				"words",
+				"words_weights	param"
+			],
+			[
+				"word",
+				"word_pairs"
+			],
+			[
+				"id2",
+				"id2row"
+			],
+			[
+				"coo",
+				"cooccurrence_matrix"
+			],
+			[
+				"Multi",
+				"MultiplicativeParser	class"
+			],
+			[
+				"Dilatio",
+				"DilationParser	class"
+			],
+			[
+				"clas",
+				"classes	param"
+			],
+			[
+				"class",
+				"classmethod	class"
+			],
+			[
+				"uttera",
+				"utterance_parser	import"
+			],
+			[
+				"NotImpl",
+				"NotImplementedError	class"
+			],
+			[
+				"feature",
+				"feature_selection_name"
+			],
+			[
+				"sec",
+				"second_wordspace_path	param"
+			],
+			[
+				"top_feat",
+				"top_features_sum	statement"
+			],
+			[
+				"max_",
+				"max_training_instances	param"
+			],
+			[
+				"parti",
+				"partition_size	param"
+			],
+			[
+				"append",
+				"append_features_to_space"
+			],
+			[
+				"feature_se",
+				"feature_selection_function"
+			],
+			[
+				"dimension",
+				"dimensionality_reduction"
+			],
+			[
+				"X_tra",
+				"X_train_partitioned"
+			],
+			[
+				"wei",
+				"weighting_dict"
+			],
+			[
+				"sum",
+				"sumtotal"
+			],
+			[
+				"weigh",
+				"weighting_dict"
+			],
+			[
+				"data",
+				"data_type"
+			],
+			[
+				"weighting",
+				"weighting_dict"
+			],
+			[
+				"weight",
+				"weighting_dict"
+			],
+			[
+				"comp",
+				"comp_function	(local, instance)"
+			],
+			[
+				"X_",
+				"X_test	(local, instance)"
+			],
+			[
+				"y_train",
+				"y_train_partitioned"
+			],
+			[
+				"targ",
+				"target_names"
+			],
+			[
+				"utteran",
+				"utterancematrix"
+			],
+			[
+				"i",
+				"indexvoc	(attribute, instance)"
+			],
+			[
+				"_",
+				"_ws_matrix	(attribute, instance)"
+			],
+			[
+				"utterance",
+				"utterancepath"
+			],
+			[
+				"get",
+				"get_vector"
+			],
+			[
+				"con",
+				"context_window	(local, instance)"
+			],
+			[
+				"print",
+				"print_function	(global, instance)"
+			],
+			[
+				"pri",
+				"print_function	(global, instance)"
+			],
+			[
+				"index",
+				"index_vector"
+			],
+			[
+				"inde",
+				"index_vector"
+			],
+			[
+				"customerObserver",
+				"customerObserverName"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "Packages/LaTeXing/LaTeX.sublime-build",
+	"command_palette":
+	{
+		"height": 127.0,
+		"selected_items":
+		[
+			[
+				"pytho",
+				"Set Syntax: Python 3"
+			],
+			[
+				"markd",
+				"Set Syntax: Markdown"
+			],
+			[
+				"bash",
+				"Set Syntax: Shell Script (Bash)"
+			],
+			[
+				"package",
+				"Package Control: Remove Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"sidebar",
+				"View: Toggle Open Files in Side Bar"
+			],
+			[
+				"markdown",
+				"Set Syntax: Markdown"
+			],
+			[
+				"markdo",
+				"Set Syntax: MultiMarkdown"
+			],
+			[
+				"togg",
+				"Toggle Block Comment"
+			],
+			[
+				"python",
+				"Set Syntax: Python"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"block",
+				"Toggle Block Comment"
+			],
+			[
+				"comment",
+				"Toggle Block Comment"
+			],
+			[
+				"commen",
+				"Toggle Block Comment"
+			],
+			[
+				"pandoc",
+				"Pandoc: Render Markdown to PDF"
+			],
+			[
+				"convert",
+				"Indentation: Convert to Spaces"
+			],
+			[
+				"link",
+				"Snippet: Markdown_link_(mdl)"
+			],
+			[
+				"pando",
+				"Pandoc: Render Markdown to PDF"
+			],
+			[
+				"to pdf",
+				"Pandoc: Render Markdown to PDF"
+			],
+			[
+				"markd to pd",
+				"Pandoc: Render Markdown to PDF"
+			],
+			[
+				"markdow",
+				"Pandoc: Render Markdown to PDF"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"doc",
+				"Python: Get documentation"
+			],
+			[
+				"delete",
+				"LaTexTools: Delete temporary files"
+			],
+			[
+				"inden",
+				"Indentation: Convert to Spaces"
+			],
+			[
+				"indenta",
+				"Indentation: Convert to Spaces"
+			],
+			[
+				"text",
+				"Set Syntax: Plain Text"
+			],
+			[
+				"matla",
+				"Set Syntax: MATLAB"
+			]
+		],
+		"width": 467.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"import urllib.request,os; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); open(os.path.join(ipp, pf), 'wb').write(urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ','%20')).read())"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/jimmy/dev/edu/thesis/paper/background.tex",
+		"/Users/jimmy/dev/edu/thesis/paper/thesis.tex",
+		"/Users/jimmy/dev/edu/thesis/paper/method.md",
+		"/Users/jimmy/dev/edu/thesis/paper/analysis.md",
+		"/Users/jimmy/dev/edu/thesis/paper/introduction.md",
+		"/Users/jimmy/dev/edu/thesis/paper/results.md",
+		"/Users/jimmy/Library/Application Support/Sublime Text 3/Packages/MarkdownEditing/MultiMarkdown.sublime-settings",
+		"/Users/jimmy/dev/edu/thesis/paper/background.md",
+		"/Users/jimmy/dev/edu/thesis/paper/discussion.md",
+		"/Users/jimmy/dev/edu/thesis/paper/evaluation.tex",
+		"/Users/jimmy/dev/edu/thesis/paper/tolatex.sh",
+		"/Users/jimmy/dev/edu/thesis/paper/method.tex",
+		"/Users/jimmy/dev/edu/thesis/experiments/analysis.md",
+		"/Users/jimmy/dev/edu/thesis/experiments/method.md",
+		"/Users/jimmy/dev/edu/thesis/experiments/introduction.md",
+		"/Users/jimmy/dev/edu/thesis/experiments/background.md",
+		"/Users/jimmy/dev/edu/thesis/experiments/thesis.mmd",
+		"/Users/jimmy/dev/edu/thesis/experiments/sentimentclassifier.py",
+		"/Users/jimmy/dev/edu/thesis/experiments/utils.py",
+		"/Users/jimmy/dev/edu/thesis/experiments/tests.py",
+		"/Users/jimmy/dev/edu/thesis/experiments/semantic_space.py",
+		"/Users/jimmy/dev/edu/thesis/experiments/dsm.py",
+		"/Users/jimmy/dev/edu/thesis/experiments/dissect.py",
+		"/Users/jimmy/dev/edu/thesis/experiments/utterance_parser.py",
+		"/Users/jimmy/dev/edu/thesis/experiments/resultsanalyzer.py",
+		"/Users/jimmy/dev/edu/thesis/experiments/save_neighbours.py",
+		"/Users/jimmy/dev/edu/thesis/experiments/multiplicative_parser.py",
+		"/Users/jimmy/dev/edu/thesis/experiments/centroid_parser.py",
+		"/Users/jimmy/dev/work/gavagai/solrclient/solrclient.py",
+		"/Users/jimmy/dev/edu/thesis/experiments/data/rt-pol/rt-polarity.neg",
+		"/Users/jimmy/dev/edu/thesis/experiments/dissect/build/lib/composes/matrix/matrix.py",
+		"/Users/jimmy/dev/edu/thesis/experiments/dissect/src/composes/utils/matrix_utils.py",
+		"/Users/jimmy/dev/edu/thesis/experiments/dissect/src/unitest/utils_test.py",
+		"/Users/jimmy/dev/edu/thesis/experiments/dissect/src/unitest/sim_pipeline_test.py",
+		"/Users/jimmy/dev/edu/thesis/experiments/dissect/src/pipelines/compute_neighbours.py",
+		"/Users/jimmy/dev/edu/thesis/experiments/dissect/src/unitest/conftest.py",
+		"/Users/jimmy/dev/edu/thesis/experiments/dsm_classes.py",
+		"/Users/jimmy/dev/edu/thesis/experiments/dissect/src/unitest/weighting_test.py",
+		"/Users/jimmy/dev/edu/thesis/experiments/dissect/resource/unittest/space_test_resources/data1.cols",
+		"/Users/jimmy/dev/edu/thesis/experiments/.idea/workspace.xml",
+		"/private/tmp/notdone",
+		"/Users/jimmy/dev/edu/thesis/experiments/dissect/src/unitest/matrix_utils_test.py",
+		"/Users/jimmy/dev/edu/thesis/experiments/dissect/build/lib/composes/utils/matrix_utils.py",
+		"/Users/jimmy/dev/edu/thesis/experiments/polarityrate.py",
+		"/Users/jimmy/dev/edu/thesis/experiments/testlogs/Similarity assertion tests.txt",
+		"/Users/jimmy/dev/edu/thesis/experiments/dissect/src/examples/full_example.py",
+		"/Users/jimmy/dev/edu/thesis/experiments/dissect/src/composes/matrix/matrix.py",
+		"/Users/jimmy/dev/edu/thesis/experiments/dissect/resource/unittest/pipelines_test_resources/mat1.col",
+		"/Users/jimmy/dev/edu/thesis/experiments/.idea/misc.xml",
+		"/Users/jimmy/dev/edu/thesis/.gitignore",
+		"/Users/jimmy/Documents/skola/Universitetet/Språkteknologi/exjobbspecs.md",
+		"/Users/jimmy/Library/Containers/com.apple.mail/Data/Library/Mail Downloads/B9D47CE9-DAF2-42FF-A7B4-FCAC4B8A54BD/dsmbenchmark.py",
+		"/Users/jimmy/dev/edu/thesis/experiments/sentimentanalysis_moviereviews.py",
+		"/Users/jimmy/dev/edu/thesis/experiments/wordspace.py",
+		"/Users/jimmy/dev/edu/thesis/experiments/dsm_classes.pyc",
+		"/Users/jimmy/Library/Containers/com.apple.mail/Data/Library/Mail Downloads/E5C379DE-50E7-4D29-88C7-D170F99ABDE2/dsm_classes.py",
+		"/Users/jimmy/dev/edu/thesis/experiments/data/positive.en.csv",
+		"/Users/jimmy/dev/edu/thesis/.git/config",
+		"/Users/jimmy/dev/edu/thesis/experiments/data/refactor_csv.py",
+		"/Users/jimmy/dev/edu/thesis/.git/co",
+		"/Users/jimmy/dev/edu/thesis/experiments/data/clean_replab.sh",
+		"/Users/jimmy/.zshrc",
+		"/Users/jimmy/dev/edu/thesis/experiments/data/replab2013-labeled.txt",
+		"/Users/jimmy/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/private/tmp/sentiments.csv",
+		"/Users/jimmy/.matplotlib/matplotlibrc",
+		"/Users/jimmy/Documents/skola/Universitetet/Språkteknologi/exjobbspecs.tex",
+		"/Users/jimmy/Library/Application Support/Sublime Text 3/Packages/MarkdownEditing/Markdown (Standard).sublime-settings",
+		"/Users/jimmy/Desktop/hernell.py",
+		"/Users/jimmy/dev/play/regexgolf/regexgolv.py",
+		"/Users/jimmy/Library/Messages/Attachments/f2/02/405DED11-1205-458D-A4BD-3473A1C71156/paraphrase4.sh",
+		"/Users/jimmy/Library/Application Support/Sublime Text 3/Packages/User/Pandoc.sublime-settings",
+		"/Users/jimmy/Library/Application Support/Sublime Text 3/Packages/Pandoc/Pandoc.sublime-settings",
+		"/Users/jimmy/Library/Application Support/Sublime Text 3/Packages/User/SmartMarkdown.sublime-settings",
+		"/Users/jimmy/Library/Application Support/Sublime Text 3/Packages/SmartMarkdown/SmartMarkdown.sublime-settings",
+		"/Users/jimmy/Library/Application Support/Sublime Text 3/Packages/SideBarEnhancements/CHANGELOG",
+		"/Users/jimmy/dev/play/randomindexing/randomindexing.py",
+		"/Users/jimmy/dev/play/randomindexing/testrandomindexing.py",
+		"/Users/jimmy/Library/Application Support/Sublime Text 3/Packages/User/SublimePython.sublime-settings",
+		"/Users/jimmy/.ipython/profile_default/ipython_config.py",
+		"/Users/jimmy/Downloads/100 numpy exercises.html",
+		"/Users/jimmy/dev/utils/config.py",
+		"/Users/jimmy/Dropbox/Tertialrapport/2013.06.Tertialrapport/polarisation.out",
+		"/Users/jimmy/Dropbox/Tertialrapport/README",
+		"/usr/local/texlive/2013/texmf-dist/tex/latex/memoir/memoir.cls",
+		"/Users/jimmy/dev/edu/thesis/README",
+		"/Users/jimmy/dev/edu/Bachelors-Thesis/.gitignore",
+		"/Users/jimmy/Downloads/Quantitative semantics/Quantitative semantics.bib",
+		"/Users/jimmy/dev/play/wikipedia2text/wikiextract.py",
+		"/Users/jimmy/dev/resources/corpora/wikipedia/wikipedia.sv/wikicat2.sh",
+		"/Users/jimmy/dev/resources/corpora/wikipedia/wikipedia.sv/stagger/src/se/su/ling/stagger/Tagger.java",
+		"/private/var/folders/04/9k0c73_x7gx80jyy942b279r0000gn/T/com.apple.iChat/Messages/Transfers/ss100.txt",
+		"/Users/jimmy/dev/play/wikipedia2text/xmldump2files.py",
+		"/Users/jimmy/dev/play/namnstatistik/svenskafangelsenamntopp1000.csv",
+		"/Users/jimmy/dev/play/namnstatistik/svenskanamntop300.csv",
+		"/Users/jimmy/dev/play/namnstatistik/namestats.py",
+		"/Users/jimmy/Downloads/Infomat/src/mro/util/experimentation/ExperimentResultGenerator.java",
+		"/Users/jimmy/Downloads/forsakringskassantargets.txt",
+		"/Users/jimmy/Downloads/moderaterna.csv",
+		"/Users/jimmy/Desktop/partiettargetmonitors.txt",
+		"/Users/jimmy/Downloads/Lutorp.m"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"method",
+			"% ",
+			"\\label{",
+			"\\subsubsection{",
+			"\\subsection{",
+			"introduction",
+			"occurr",
+			"remove_sto",
+			"^$",
+			"^\\d+$",
+			"logs/",
+			"id2row",
+			"get_pars",
+			"tfidf",
+			"feature_extraction",
+			"data",
+			"/",
+			"grouped",
+			"sumcat",
+			"weighting_functions[feature_weighting]",
+			"data['data']",
+			"data['target']",
+			"data['data']",
+			"polarity",
+			"DissectSpace(",
+			"DissectSpace(space)",
+			"cols",
+			"space",
+			"load_diss",
+			"dissect_",
+			"norm",
+			"norm_",
+			"(",
+			"max_ppmis",
+			"len_utterance",
+			"from",
+			"weightin",
+			"count_words",
+			"comp",
+			"clf",
+			"train(",
+			"classes=[]",
+			"clf",
+			"get_pars",
+			"len_uttera",
+			"len_utterance",
+			"words",
+			"get_parse",
+			"build_dis",
+			"WeightedAdditive",
+			"dissec",
+			"load_diss",
+			"n=10",
+			"10",
+			"n_training_instances",
+			"weight",
+			"/",
+			", ",
+			"?",
+			", ",
+			"/",
+			", ",
+			"gosta",
+			", ",
+			"no",
+			", ",
+			"^[^\\s]+\\..+(\\.[^\\s]+)?$",
+			"neg",
+			"pos",
+			"data_train.tar",
+			"data_train.da",
+			"data_test.da",
+			"us",
+			"get_utterance",
+			"uparser",
+			"print",
+			"tokens[i+1]",
+			"tokens[i]",
+			"len_utterance",
+			"resolve_type_conflict",
+			"compose",
+			"compos",
+			"xxx",
+			"assert_dict_ma",
+			"assert",
+			"assert_di",
+			"compose",
+			"list2d",
+			"sparse",
+			"load_tr",
+			"=",
+			"ws",
+			"inplace",
+			"build_dis",
+			"return space",
+			"load_diss",
+			"ws_wei",
+			"space",
+			"_compo",
+			"none",
+			"print(",
+			"\n            ",
+			"before",
+			"Space(",
+			"space",
+			"get_utterance",
+			"row2id",
+			"list2di",
+			"build_utterance_spa",
+			"uparse",
+			"load_wordspace",
+			"build_di",
+			"self.",
+			"utterance_repre",
+			"get_",
+			"utterance_representation",
+			"set(",
+			"tokenize",
+			"trim",
+			"X_train",
+			"split",
+			"self",
+			"CoocMat",
+			"IndVoc",
+			"max_test_instances/n",
+			"max_training_instances/n",
+			"n_training_instances",
+			"b"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": true,
+		"replace_history":
+		[
+			"translitterering"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 22.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 100.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.markdown":
+	{
+		"height": 94.0
+	},
+	"output.rope_python_documentation":
+	{
+		"height": 94.0
+	},
+	"project": "thesis.sublime-project",
+	"replace":
+	{
+		"height": 40.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"thesi",
+				"~/dev/edu/thesis/paper/thesis.tex"
+			],
+			[
+				"results",
+				"~/dev/edu/thesis/experiments/resultsanalyzer.py"
+			],
+			[
+				"re",
+				"~/dev/edu/thesis/experiments/resultsanalyzer.py"
+			],
+			[
+				"resul",
+				"~/dev/edu/thesis/experiments/resultsanalyzer.py"
+			],
+			[
+				"resu",
+				"~/dev/edu/thesis/experiments/resultsanalyzer.py"
+			],
+			[
+				"diss",
+				"~/dev/edu/thesis/experiments/dissect.py"
+			],
+			[
+				"senti",
+				"~/dev/edu/thesis/experiments/sentimentclassifier.py"
+			],
+			[
+				"sen",
+				"~/dev/edu/thesis/experiments/sentimentclassifier.py"
+			],
+			[
+				"dissec",
+				"~/dev/edu/thesis/experiments/dissect.py"
+			],
+			[
+				"sent",
+				"~/dev/edu/thesis/experiments/sentimentclassifier.py"
+			],
+			[
+				"se",
+				"sentimentclassifier.py"
+			],
+			[
+				"sentime",
+				"sentimentclassifier.py"
+			],
+			[
+				"clas",
+				"dsm_classes.py"
+			],
+			[
+				"seman",
+				"semantic_space.py"
+			],
+			[
+				"dsm_c",
+				"dsm_classes.py"
+			],
+			[
+				"sentim",
+				"sentimentclassifier.py"
+			],
+			[
+				"space.",
+				"dissect/src/composes/semantic_space/space.py"
+			],
+			[
+				"compos",
+				"dissect/src/composes/composition/composition_model.py"
+			],
+			[
+				"weigh",
+				"dissect/src/composes/composition/weighted_additive.py"
+			],
+			[
+				"parser",
+				"utterance_parser.py"
+			],
+			[
+				"weigted",
+				"dissect/src/composes/composition/weighted_additive.py"
+			],
+			[
+				"pars",
+				"utterance_parser.py"
+			],
+			[
+				"parse",
+				"utterance_parser.py"
+			],
+			[
+				"matrix",
+				"dissect/src/composes/matrix/matrix.py"
+			],
+			[
+				"space",
+				"dissect/src/composes/semantic_space/space.py"
+			],
+			[
+				"sema",
+				"semantic_space.py"
+			],
+			[
+				"",
+				"dissect/src/composes/composition/composition_model.py"
+			],
+			[
+				"disse",
+				"dissect.py"
+			],
+			[
+				"semantic",
+				"dissect/src/composes/semantic_space/space.py"
+			],
+			[
+				"dis",
+				"dissect.py"
+			],
+			[
+				"dense",
+				"dissect/src/composes/matrix/dense_matrix.py"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 192.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
